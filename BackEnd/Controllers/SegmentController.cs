@@ -1,120 +1,44 @@
-﻿using System;
+﻿using BackEnd.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Description;
-using BackEnd.Data;
-using BackEnd.Models;
 
 namespace BackEnd.Controllers
 {
     public class SegmentController : ApiController
     {
-        private BEContext db = new BEContext();
-
-        // GET: api/Segment
-        public IQueryable<Segment> GetSegments()
+        private  DataClasses1DataContext context;
+         SegmentController()
         {
-            return db.Segments;
+            context = new DataClasses1DataContext(System.Configuration.ConfigurationManager.ConnectionStrings["validationsConnectionString"].ToString());
         }
-
-        // GET: api/Segment/5
-        [ResponseType(typeof(Segment))]
-        public async Task<IHttpActionResult> GetSegment(int id)
+        public IEnumerable<Module> Get()
         {
-            Segment segment = await db.Segments.FindAsync(id);
-            if (segment == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(segment);
+            List<Module> ex =context.Modules.ToList();
+            return ex;
         }
-
-        // PUT: api/Segment/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutSegment(int id, Segment segment)
+       public HttpResponseMessage Post(Module module)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            int pos = context.Modules.Count();
+            Module mod = new Module();
+            mod.moduleName = module.moduleName;
+            mod.moduleDescription = module.moduleDescription;
+            mod.moduleStatus = "true";
+            mod.modulePosition = pos + 1;
 
-            if (id != segment.SegmentId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(segment).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SegmentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            context.Modules.InsertOnSubmit(mod);
+            context.SubmitChanges();
+            return Request.CreateErrorResponse(HttpStatusCode.OK, "record inserted");
         }
-
-        // POST: api/Segment
-        [ResponseType(typeof(Segment))]
-        public async Task<IHttpActionResult> PostSegment(Segment segment)
+        public HttpResponseMessage Delete(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Segments.Add(segment);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = segment.SegmentId }, segment);
-        }
-
-        // DELETE: api/Segment/5
-        [ResponseType(typeof(Segment))]
-        public async Task<IHttpActionResult> DeleteSegment(int id)
-        {
-            Segment segment = await db.Segments.FindAsync(id);
-            if (segment == null)
-            {
-                return NotFound();
-            }
-
-            db.Segments.Remove(segment);
-            await db.SaveChangesAsync();
-
-            return Ok(segment);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool SegmentExists(int id)
-        {
-            return db.Segments.Count(e => e.SegmentId == id) > 0;
+            Module mod = context.Modules.FirstOrDefault(e => e.moduleId == id);
+            mod.moduleStatus = "false";
+            context.SubmitChanges();
+            return Request.CreateErrorResponse(HttpStatusCode.OK, "record Deleted");
         }
     }
 }
