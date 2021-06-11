@@ -26,19 +26,58 @@ namespace BackEnd.Controllers
             Module mod = new Module();
             mod.moduleName = module.moduleName;
             mod.moduleDescription = module.moduleDescription;
-            mod.moduleStatus = "true";
-            mod.modulePosition = pos + 1;
+            mod.moduleStatus = true;
+            mod.moduleOrder = pos + 1;
 
             context.Modules.InsertOnSubmit(mod);
             context.SubmitChanges();
             return Request.CreateErrorResponse(HttpStatusCode.OK, "record inserted");
         }
+        public HttpResponseMessage Put(int id,Module module)
+        {
+            try
+            {
+Module mod = context.Modules.FirstOrDefault(e => e.moduleId == id);
+            mod.moduleName=module.moduleName;
+            mod.moduleDescription = module.moduleDescription;
+            context.SubmitChanges();
+            return Request.CreateResponse(HttpStatusCode.OK, "Module edited sucessfully");
+            }
+            catch(Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "unable to update record try again later");
+            }
+            
+        }
+        public HttpResponseMessage Put(int id)
+        {
+            try
+            {
+                Module mod = context.Modules.FirstOrDefault(e => e.moduleId == id);
+                mod.moduleStatus = true;
+                context.SubmitChanges();
+                return Request.CreateResponse(HttpStatusCode.OK, "Module restored sucessfully");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "unable to update record try again later");
+            }
+
+        }
         public HttpResponseMessage Delete(int id)
         {
-            Module mod = context.Modules.FirstOrDefault(e => e.moduleId == id);
-            mod.moduleStatus = "false";
+            try
+            {
+Module mod = context.Modules.FirstOrDefault(e => e.moduleId == id);
+            mod.moduleStatus = false;
             context.SubmitChanges();
             return Request.CreateErrorResponse(HttpStatusCode.OK, "record Deleted");
+            }
+            catch(Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "record not found try again later");
+            }
+            
         }
     }
 }

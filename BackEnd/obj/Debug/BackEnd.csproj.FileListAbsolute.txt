@@ -51,8 +51,6 @@ E:\office work\specktasystems\Project1 validation module\BackEnd\bin\roslyn\vbc.
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\roslyn\VBCSCompiler.exe
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\roslyn\VBCSCompiler.exe.config
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\Antlr3.Runtime.dll
-E:\office work\specktasystems\Project1 validation module\BackEnd\bin\EntityFramework.dll
-E:\office work\specktasystems\Project1 validation module\BackEnd\bin\EntityFramework.SqlServer.dll
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\Microsoft.Web.Infrastructure.dll
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\Newtonsoft.Json.dll
@@ -69,8 +67,6 @@ E:\office work\specktasystems\Project1 validation module\BackEnd\bin\System.Web.
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\System.Web.WebPages.dll
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\System.Web.WebPages.Razor.dll
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\WebGrease.dll
-E:\office work\specktasystems\Project1 validation module\BackEnd\bin\EntityFramework.xml
-E:\office work\specktasystems\Project1 validation module\BackEnd\bin\EntityFramework.SqlServer.xml
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\System.Web.Http.Cors.xml
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\Newtonsoft.Json.xml
 E:\office work\specktasystems\Project1 validation module\BackEnd\bin\System.Net.Http.Formatting.xml

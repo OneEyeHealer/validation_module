@@ -7,8 +7,8 @@
       <Column Name="exerciseName" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Column Name="exerciseDescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="exerciseCategory" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="exerciseStatus" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-      <Column Name="exercisePosition" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="exerciseStatus" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="exerciseOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Exercise_Task" Member="Tasks" ThisKey="exerciseId" OtherKey="exerciseId" Type="Task" />
       <Association Name="Module_Exercise" Member="Module" ThisKey="moduleId" OtherKey="moduleId" Type="Module" IsForeignKey="true" />
     </Type>
@@ -18,8 +18,8 @@
       <Column Name="moduleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="moduleName" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Column Name="moduleDescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="moduleStatus" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-      <Column Name="modulePosition" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="moduleStatus" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="moduleOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Module_Exercise" Member="Exercises" ThisKey="moduleId" OtherKey="moduleId" Type="Exercise" />
     </Type>
   </Table>
@@ -29,8 +29,8 @@
       <Column Name="exerciseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="taskName" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Column Name="taskDescription" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="taskStatus" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-      <Column Name="taskPosition" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="taskStatus" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="taskOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Exercise_Task" Member="Exercise" ThisKey="exerciseId" OtherKey="exerciseId" Type="Exercise" IsForeignKey="true" />
     </Type>
   </Table>

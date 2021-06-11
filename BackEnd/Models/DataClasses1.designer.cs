@@ -112,9 +112,9 @@ namespace BackEnd.Models
 		
 		private string _exerciseCategory;
 		
-		private string _exerciseStatus;
+		private System.Nullable<bool> _exerciseStatus;
 		
-		private System.Nullable<int> _exercisePosition;
+		private System.Nullable<int> _exerciseOrder;
 		
 		private EntitySet<Task> _Tasks;
 		
@@ -134,10 +134,10 @@ namespace BackEnd.Models
     partial void OnexerciseDescriptionChanged();
     partial void OnexerciseCategoryChanging(string value);
     partial void OnexerciseCategoryChanged();
-    partial void OnexerciseStatusChanging(string value);
+    partial void OnexerciseStatusChanging(System.Nullable<bool> value);
     partial void OnexerciseStatusChanged();
-    partial void OnexercisePositionChanging(System.Nullable<int> value);
-    partial void OnexercisePositionChanged();
+    partial void OnexerciseOrderChanging(System.Nullable<int> value);
+    partial void OnexerciseOrderChanged();
     #endregion
 		
 		public Exercise()
@@ -251,8 +251,8 @@ namespace BackEnd.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_exerciseStatus", DbType="NVarChar(5)")]
-		public string exerciseStatus
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_exerciseStatus", DbType="Bit")]
+		public System.Nullable<bool> exerciseStatus
 		{
 			get
 			{
@@ -271,22 +271,22 @@ namespace BackEnd.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_exercisePosition", DbType="Int")]
-		public System.Nullable<int> exercisePosition
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_exerciseOrder", DbType="Int")]
+		public System.Nullable<int> exerciseOrder
 		{
 			get
 			{
-				return this._exercisePosition;
+				return this._exerciseOrder;
 			}
 			set
 			{
-				if ((this._exercisePosition != value))
+				if ((this._exerciseOrder != value))
 				{
-					this.OnexercisePositionChanging(value);
+					this.OnexerciseOrderChanging(value);
 					this.SendPropertyChanging();
-					this._exercisePosition = value;
-					this.SendPropertyChanged("exercisePosition");
-					this.OnexercisePositionChanged();
+					this._exerciseOrder = value;
+					this.SendPropertyChanged("exerciseOrder");
+					this.OnexerciseOrderChanged();
 				}
 			}
 		}
@@ -383,9 +383,9 @@ namespace BackEnd.Models
 		
 		private string _moduleDescription;
 		
-		private string _moduleStatus;
+		private System.Nullable<bool> _moduleStatus;
 		
-		private System.Nullable<int> _modulePosition;
+		private System.Nullable<int> _moduleOrder;
 		
 		private EntitySet<Exercise> _Exercises;
 		
@@ -399,10 +399,10 @@ namespace BackEnd.Models
     partial void OnmoduleNameChanged();
     partial void OnmoduleDescriptionChanging(string value);
     partial void OnmoduleDescriptionChanged();
-    partial void OnmoduleStatusChanging(string value);
+    partial void OnmoduleStatusChanging(System.Nullable<bool> value);
     partial void OnmoduleStatusChanged();
-    partial void OnmodulePositionChanging(System.Nullable<int> value);
-    partial void OnmodulePositionChanged();
+    partial void OnmoduleOrderChanging(System.Nullable<int> value);
+    partial void OnmoduleOrderChanged();
     #endregion
 		
 		public Module()
@@ -471,8 +471,8 @@ namespace BackEnd.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_moduleStatus", DbType="NVarChar(5)")]
-		public string moduleStatus
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_moduleStatus", DbType="Bit")]
+		public System.Nullable<bool> moduleStatus
 		{
 			get
 			{
@@ -491,22 +491,22 @@ namespace BackEnd.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_modulePosition", DbType="Int")]
-		public System.Nullable<int> modulePosition
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_moduleOrder", DbType="Int")]
+		public System.Nullable<int> moduleOrder
 		{
 			get
 			{
-				return this._modulePosition;
+				return this._moduleOrder;
 			}
 			set
 			{
-				if ((this._modulePosition != value))
+				if ((this._moduleOrder != value))
 				{
-					this.OnmodulePositionChanging(value);
+					this.OnmoduleOrderChanging(value);
 					this.SendPropertyChanging();
-					this._modulePosition = value;
-					this.SendPropertyChanged("modulePosition");
-					this.OnmodulePositionChanged();
+					this._moduleOrder = value;
+					this.SendPropertyChanged("moduleOrder");
+					this.OnmoduleOrderChanged();
 				}
 			}
 		}
@@ -571,9 +571,9 @@ namespace BackEnd.Models
 		
 		private string _taskDescription;
 		
-		private string _taskStatus;
+		private System.Nullable<bool> _taskStatus;
 		
-		private System.Nullable<int> _taskPosition;
+		private System.Nullable<int> _taskOrder;
 		
 		private EntityRef<Exercise> _Exercise;
 		
@@ -589,10 +589,10 @@ namespace BackEnd.Models
     partial void OntaskNameChanged();
     partial void OntaskDescriptionChanging(string value);
     partial void OntaskDescriptionChanged();
-    partial void OntaskStatusChanging(string value);
+    partial void OntaskStatusChanging(System.Nullable<bool> value);
     partial void OntaskStatusChanged();
-    partial void OntaskPositionChanging(System.Nullable<int> value);
-    partial void OntaskPositionChanged();
+    partial void OntaskOrderChanging(System.Nullable<int> value);
+    partial void OntaskOrderChanged();
     #endregion
 		
 		public Task()
@@ -685,8 +685,8 @@ namespace BackEnd.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taskStatus", DbType="NVarChar(5)")]
-		public string taskStatus
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taskStatus", DbType="Bit")]
+		public System.Nullable<bool> taskStatus
 		{
 			get
 			{
@@ -705,22 +705,22 @@ namespace BackEnd.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taskPosition", DbType="Int")]
-		public System.Nullable<int> taskPosition
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taskOrder", DbType="Int")]
+		public System.Nullable<int> taskOrder
 		{
 			get
 			{
-				return this._taskPosition;
+				return this._taskOrder;
 			}
 			set
 			{
-				if ((this._taskPosition != value))
+				if ((this._taskOrder != value))
 				{
-					this.OntaskPositionChanging(value);
+					this.OntaskOrderChanging(value);
 					this.SendPropertyChanging();
-					this._taskPosition = value;
-					this.SendPropertyChanged("taskPosition");
-					this.OntaskPositionChanged();
+					this._taskOrder = value;
+					this.SendPropertyChanged("taskOrder");
+					this.OntaskOrderChanged();
 				}
 			}
 		}

@@ -22,32 +22,71 @@ namespace BackEnd.Controllers
         //}
         public HttpResponseMessage Post([FromUri] int id, [FromBody] Task task)
         {
-            int present = context.Exercises.Where(e => e.exerciseId == id).Count();
-            if (present != 0)
+
+          try
             {
-                int pos = context.Tasks.Where(e => e.taskId == id).Count();
+                int pos = context.Tasks.Where(e => e.exerciseId == id).Count();
                 Task newTask = new Task();
                 newTask.taskName = task.taskName;
                 newTask.taskDescription = task.taskDescription;
-                newTask.taskStatus = "true";
-                newTask.taskPosition = pos + 1;
+                newTask.taskStatus = true;
+                newTask.taskOrder = pos + 1;
                 newTask.exerciseId = id;
 
                 context.Tasks.InsertOnSubmit(newTask);
                 context.SubmitChanges();
                 return Request.CreateErrorResponse(HttpStatusCode.OK, "record inserted");
             }
-            else
+           catch(Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "unable to insert try again later");
             }
         }
+        public HttpResponseMessage Put(int id, Task task)
+        {
+            try
+            {
+ Task tas = context.Tasks.FirstOrDefault(e => e.taskId == id);
+            tas.taskName = task.taskName;
+            tas.taskDescription = task.taskDescription;
+            context.SubmitChanges();
+            return Request.CreateResponse(HttpStatusCode.OK, "Task edited sucessfully");
+            }
+            catch(Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "unable to update record try again later");
+            }
+           
+        }
+        public HttpResponseMessage Put(int id)
+        {
+            try
+            {
+                Task mod = context.Tasks.FirstOrDefault(e => e.taskId == id);
+                mod.taskStatus = true;
+                context.SubmitChanges();
+                return Request.CreateResponse(HttpStatusCode.OK, "Task restored sucessfully");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "unable to update record try again later");
+            }
+
+        }
         public HttpResponseMessage Delete(int id)
         {
-            Task mod = context.Tasks.FirstOrDefault(e => e.taskId == id);
-            mod.taskStatus = "false";
+            try
+            {
+Task tas = context.Tasks.FirstOrDefault(e => e.taskId == id);
+            tas.taskStatus = false;
             context.SubmitChanges();
             return Request.CreateErrorResponse(HttpStatusCode.OK, "record Deleted");
+            }
+            catch(Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "unable to delete record try again later");
+            }
+            
         }
     }
 }
