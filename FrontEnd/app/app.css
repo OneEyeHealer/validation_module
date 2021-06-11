@@ -2,6 +2,8 @@
 :root {
   --bg-nav-color: rgb(57, 59, 180);
   --nav-text-color: #fff;
+  --segemnt-color: rgb(184, 74, 248);
+  --text-red: #ff0000;
 }
 .menu {
   list-style: none;
@@ -33,4 +35,78 @@
 .bg-navbar a {
   color: var(--nav-text-color) !important;
   margin: auto 1rem;
+}
+
+.segment-box {
+  width: 18rem;
+  padding: 15px;
+  margin: auto;
+  background-color: #ededed;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.segment-title {
+  margin: 2rem;
+  width: 13rem;
+  padding: 10px 20px;
+  border-radius: 3px;
+  background-color: #ededed;
+}
+
+h1 {
+  text-align: center;
+  color: var(--segemnt-color);
+  margin: 10px;
+}
+
+.badge-font-size {
+  font-size: 10px;
+  background: #fa3939c2;
+  border-radius: 100% !important;
+}
+
+input[type="text"] {
+  width: 95%;
+  padding: 8px;
+  font-size: 16px;
+  margin-left: 8px;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+}
+
+.search {
+  position: relative;
+}
+.search span {
+  position: absolute;
+  top: -10px;
+  right: -4px;
+  background: var(--segemnt-color);
+  padding: 20px;
+  display: flex;
+  border-radius: 100%;
+  cursor: pointer;
+}
+ul {
+  list-style: none;
+  padding: 6px;
+}
+.task-list {
+  background: #fff;
+  margin: 5px;
+  padding: 10px;
+  border-left: 4px solid var(--segemnt-color);
+  border-right: 4px solid var(--segemnt-color);
+}
+
+.task-list i {
+  padding: 4px;
+  float: right;
+  cursor: pointer;
+  color: var(--text-red);
+}
+
+p {
+  color: var(--text-red);
 }
