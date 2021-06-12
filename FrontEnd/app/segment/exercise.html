@@ -1,0 +1,21 @@
+<div class="col p-3">
+  <div class="segment-box">
+    <h1>
+      Exercise
+
+      <sup
+        ><span class="badge-font-size badge bg-danger">{{TaskCount}}</span></sup
+      >
+    </h1>
+    <div class="search">
+      <input type="text" placeholder=" new Task" ng-model="NewTask" />
+      <span ng-click="PostTask()"><i class="fa fa-plus"></i></span>
+    </div>
+    <ul>
+      <li ng-repeat="task in Tasks" class="task-list">
+        {{task}} <i ng-click="DeleteTask($index)" class="fa fa-trash"></i>
+      </li>
+    </ul>
+    <p>{{errortext}}</p>
+  </div>
+</div>
