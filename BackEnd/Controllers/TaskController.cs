@@ -58,6 +58,17 @@ namespace BackEnd.Controllers
             }
            
         }
+        public HttpResponseMessage Put(Order order)
+        {
+
+            for (int i = 0; i < (order.id).Count; i++)
+            {
+                Task mod = context.Tasks.FirstOrDefault(e => e.taskId == order.id[i]);
+                mod.taskOrder = order.position[i];
+                context.SubmitChanges();
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "positions updated");
+        }
         public HttpResponseMessage Put(int id)
         {
             try

@@ -17,8 +17,19 @@ namespace BackEnd.Controllers
         }
         public IEnumerable<Module> Get()
         {
-            List<Module> ex =context.Modules.ToList();
-            return ex;
+           var mod=new GetModulesData( );
+            return mod.getDataInOrder(context.Modules.ToList());
+        }
+        public HttpResponseMessage Put(Order order)
+        {
+
+           for(int i = 0; i < (order.id).Count; i++)
+            {
+                Module mod = context.Modules.FirstOrDefault(e => e.moduleId == order.id[i]);
+                mod.moduleOrder = order.position[i];
+                context.SubmitChanges();
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "positions updated");
         }
        public HttpResponseMessage Post(Module module)
         {
