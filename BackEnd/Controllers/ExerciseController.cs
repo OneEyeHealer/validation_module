@@ -43,6 +43,17 @@ namespace BackEnd.Controllers
             }
 
         }
+        public HttpResponseMessage Put(Order order)
+        {
+
+            for (int i = 0; i < (order.id).Count; i++)
+            {
+                Exercise mod = context.Exercises.FirstOrDefault(e => e.exerciseId == order.id[i]);
+                mod.exerciseOrder = order.position[i];
+                context.SubmitChanges();
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "positions updated");
+        }
         public HttpResponseMessage Put(int id, Exercise exercise)
         {
             try
