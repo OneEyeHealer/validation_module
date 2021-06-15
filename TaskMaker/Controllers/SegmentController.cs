@@ -44,15 +44,23 @@ namespace BackEnd.Controllers
             context.SubmitChanges();
             return Request.CreateErrorResponse(HttpStatusCode.OK, "record inserted");
         }
-        public HttpResponseMessage Put(int id,Module module)
+        public HttpResponseMessage Put([FromUri]int id,[FromBody]Module module)
         {
             try
             {
-Module mod = context.Modules.FirstOrDefault(e => e.moduleId == id);
+                if (module is null || module.moduleName == null ||module.moduleName==""  )
+                {
+throw new Exception();
+                }
+                else
+                {
+                    Module mod = context.Modules.FirstOrDefault(e => e.moduleId == id);
             mod.moduleName=module.moduleName;
             mod.moduleDescription = module.moduleDescription;
             context.SubmitChanges();
             return Request.CreateResponse(HttpStatusCode.OK, "Module edited sucessfully");
+                }
+
             }
             catch(Exception e)
             {
@@ -60,7 +68,7 @@ Module mod = context.Modules.FirstOrDefault(e => e.moduleId == id);
             }
             
         }
-        public HttpResponseMessage Put(int id)
+        public HttpResponseMessage Get([FromUri]int id)
         {
             try
             {

@@ -1,4 +1,8 @@
-﻿<div class="row" ng-controller="exerciseController">
+﻿@{
+    Layout = null;
+}
+
+<div class="row" ng-controller="exerciseController">
     <div class=" col-lg-4 card" ng-repeat="module in task">
         <h1>{{module.taskName}}</h1>
         <p class="title">{{module.taskDescription}}</p>

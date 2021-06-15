@@ -1,7 +1,7 @@
 ﻿var app = angular.module("myApp", []);
-app.run(function ($rootScope) {
-    $rootScope.exercise = {};
-})
+//app.run(function ($rootScope) {
+//    $rootScope.exercise = {};
+//})
 app.controller("myController", function ($scope, $rootScope,$http) {
    
     $http.get("/api/Segment").then(function (d) {
