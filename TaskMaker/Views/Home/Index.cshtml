@@ -1,7 +1,5 @@
 ﻿
-@{
-    ViewBag.Title = "Home Page";
-}
+
 <html>
 <head>
     <script src="~/Scripts/angular.min.js"></script>
@@ -11,20 +9,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
-<body ng-app="myApp" ng-controller="myController">
+<body ng-app="myApp">
     <h2>index module</h2>
-    <div class="row">
+    <div class="row" ng-controller="myController">
         <div class=" col-lg-4 card" ng-repeat="module in data">
             <h1>{{module.moduleName}}</h1>
             <p class="title">{{module.moduleDescription}}</p>
             <p>Exercise: {{module.Exercises.length}}</p>
             <a href="#"><i class="fa fa-trash"></i></a>
             <a href="#"><i class="fa fa-edit"></i></a>
-            <p><button>Open Module</button></p>
+            <p><button ng-click="openExercise(module)">Open Module</button></p>
         </div>
-    
+
     </div>
-    
+
+    <div ng-include="'/Home/Exercise'"></div>
+
+   <div ng-include="'/Home/Task'"></div>
 </body>
 </html>
 

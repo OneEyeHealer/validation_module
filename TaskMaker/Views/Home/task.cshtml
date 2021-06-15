@@ -1,0 +1,10 @@
+﻿<div class="row" ng-controller="exerciseController">
+    <div class=" col-lg-4 card" ng-repeat="module in task">
+        <h1>{{module.taskName}}</h1>
+        <p class="title">{{module.taskDescription}}</p>
+        <a href="#"><i class="fa fa-trash"></i></a>
+        <a href="#"><i class="fa fa-edit"></i></a>
+        <p><button ng-click="openTask(module)">Open Module</button></p>
+    </div>
+
+</div>
