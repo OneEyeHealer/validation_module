@@ -1,0 +1,16 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="row" ng-controller="exerciseController">
+    <div class=" col-lg-4 card" ng-repeat="module in exercise">
+        <h1>{{module.exerciseName}}</h1>
+        <p class="title">{{module.exerciseDescription}}</p>
+        <p>{{module.exerciseCategory}}</p>
+        <p>Task: {{module.Tasks.length}}</p>
+        <a href="#"><i class="fa fa-trash"></i></a>
+        <a href="#"><i class="fa fa-edit"></i></a>
+        <p><button ng-click="openTask(module)">Open Exercise</button></p>
+    </div>
+
+</div>
