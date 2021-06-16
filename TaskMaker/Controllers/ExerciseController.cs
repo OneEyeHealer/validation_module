@@ -58,12 +58,21 @@ namespace BackEnd.Controllers
         {
             try
             {
+                if (exercise is null||exercise.exerciseName == null || exercise.exerciseName == "")
+                {
+  throw new Exception();
+                }
+                else
+                {
 Exercise exer = context.Exercises.FirstOrDefault(e => e.exerciseId == id);
             exer.exerciseName = exercise.exerciseName;
             exer.exerciseDescription = exercise.exerciseDescription;
             exer.exerciseCategory = exercise.exerciseCategory;
             context.SubmitChanges();
             return Request.CreateResponse(HttpStatusCode.OK, "Exercise edited sucessfully");
+                   
+                }
+               
             }
             catch(Exception e)
             {
@@ -71,7 +80,7 @@ Exercise exer = context.Exercises.FirstOrDefault(e => e.exerciseId == id);
             }
             
         }
-        public HttpResponseMessage Put(int id)
+        public HttpResponseMessage Get( int id)
         {
             try
             {

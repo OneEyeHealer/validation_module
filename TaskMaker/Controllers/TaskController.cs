@@ -46,11 +46,20 @@ namespace BackEnd.Controllers
         {
             try
             {
- Task tas = context.Tasks.FirstOrDefault(e => e.taskId == id);
+                if (task is null||task.taskName == null || task.taskName == "")
+                {
+throw new Exception();
+                }
+                else
+                {
+Task tas = context.Tasks.FirstOrDefault(e => e.taskId == id);
             tas.taskName = task.taskName;
             tas.taskDescription = task.taskDescription;
             context.SubmitChanges();
             return Request.CreateResponse(HttpStatusCode.OK, "Task edited sucessfully");
+                    
+                }
+                
             }
             catch(Exception e)
             {
@@ -69,7 +78,7 @@ namespace BackEnd.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, "positions updated");
         }
-        public HttpResponseMessage Put(int id)
+        public HttpResponseMessage Get(int id)
         {
             try
             {
