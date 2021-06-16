@@ -1,15 +1,20 @@
 ﻿var app = angular.module("myApp", []);
-//app.run(function ($rootScope) {
-//    $rootScope.exercise = {};
-//})
-app.controller("myController", function ($scope, $rootScope,$http) {
+app.run(function ($rootScope) {
+    $rootScope.exercise = {};
+    $rootScope.AddModule = "+ Create Module"
+})
+app.controller("moduleController", function ($scope, $rootScope, $http) {
+    $scope.currentTime = new Date().toLocaleTimeString();
    
     $http.get("/api/Segment").then(function (d) {
-        $scope.data=d.data
-        console.log(d.data);
+        $rootScope.OnAddModule = () => {
+            $scope.data=d.data
+            console.log(d.data);
+        }
     }, function (error) {
-            alert(d)
+        alert(d)
     })
+
     $scope.openExercise = function (data) {
         console.log(data);
         $rootScope.exercise= data.Exercises
@@ -19,7 +24,7 @@ app.controller("myController", function ($scope, $rootScope,$http) {
 })
 app.controller("exerciseController", function ($scope, $rootScope) {
 
-    $scope.openTask = function (data) {
+    $scope.openTask = (data) => {
         console.log(data);
         $rootScope.task = data.Tasks
     }
