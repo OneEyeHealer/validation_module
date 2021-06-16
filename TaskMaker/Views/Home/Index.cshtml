@@ -1,30 +1,40 @@
 ﻿
-@{
-    ViewBag.Title = "Home Page";
-}
+
 <html>
 <head>
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/angular.js"></script>
     <script src="~/Scripts/jsFile/App.js"></script>
     <link href="~/Content/css/card.css" rel="stylesheet" />
+    <link href="~/Content/css/app.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
-<body ng-app="myApp" ng-controller="myController">
-    <h2>index module</h2>
-    <div class="row">
-        <div class=" col-lg-4 card" ng-repeat="module in data">
-            <h1>{{module.moduleName}}</h1>
-            <p class="title">{{module.moduleDescription}}</p>
-            <p>Exercise: {{module.Exercises.length}}</p>
-            <a href="#"><i class="fa fa-trash"></i></a>
-            <a href="#"><i class="fa fa-edit"></i></a>
-            <p><button>Open Module</button></p>
+<body ng-app="myApp">
+    <div class="container">
+        <h2 class="text-center">Task Maker List</h2>
+        <div class="card m-3 text-left" style="width: 18rem">
+            <div class="card-header pointer" ng-click="OnAddModule()">{{AddModule}}</div>
         </div>
-    
+       
+        <div class="" ng-controller="moduleController">
+            <div class="col-4 card m-4" ng-repeat="module in data">
+                <div class="card-header text-center">
+                    <h3><span class="text-muted">#{{module.moduleId}}</span></h3>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title">Name: {{module.moduleName}}</h1>
+                    <p class="card-text">{{module.moduleDescription}}</p>
+                    <a href="#" class="btn btn-primary" ng-click="openExercise(module)">+ Create Exercise</a>
+                </div>
+                <div class="card-footer text-muted">
+                    {{currentTime}}
+                </div>
+            </div>
+        </div>
+        <div ng-include="'/Home/Exercise'"></div>
+        <div ng-include="'/Home/Task'"></div>
     </div>
-    
 </body>
 </html>
 

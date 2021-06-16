@@ -14,5 +14,17 @@ namespace BackEnd.Controllers
 
             return View();
         }
+        public ActionResult Exercise()
+        {
+            ViewBag.Title = "Exercise";
+
+            return View();
+        }
+        public ActionResult Task()
+        {
+            ViewBag.Title = "Task Page";
+
+            return View();
+        }
     }
 }

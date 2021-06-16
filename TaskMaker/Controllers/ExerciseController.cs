@@ -15,11 +15,11 @@ namespace BackEnd.Controllers
         {
             context = new DataClasses1DataContext(System.Configuration.ConfigurationManager.ConnectionStrings["validationsConnectionString"].ToString());
         }
-        //public IEnumerable<Exercise> Get(int id)
-        //{
-        //    List<Exercise> ex = context.Exercises.Where(e=>e.exerciseId==id).ToList();
-        //    return ex;
-        //}
+        public IEnumerable<Exercise> Get()
+        {
+            List<Exercise> ex = context.Exercises.ToList();
+            return ex;
+        }
         public HttpResponseMessage Post([FromUri]int id,[FromBody]Exercise exercise)
         {
             try

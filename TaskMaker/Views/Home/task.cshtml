@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+
+@*<div class="row" ng-controller="exerciseController">
+    <div class="col-lg-12 card m-2" ng-repeat="module in task">
+        <div class="card-header text-center">
+            <h3><span class="text-muted">#{{module.taskId}}</span></h3>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title">Name: {{module.taskName}}</h1>
+            <p class="card-text">{{module.taskDescription}}</p>
+            <a href="#"><i class="fa fa-trash"></i></a>
+            <a href="#"><i class="fa fa-edit"></i></a>
+            <a href="#" class="btn btn-primary" ng-click="openTask(module)">+ Create Task</a>
+        </div>
+    </div>
+</div>*@
+
+<div class="row" ng-controller="exerciseController">
+    <div class="col-lg-12" ng-repeat="module in task">
+
+    <a href="#" class="float-btn"><i class="fa fa-trash"></i></a>
+    <a href="#" class="float-btn"><i class="fa fa-edit"></i></a>
+    <div class="cr_container-box cr_left" data-aos="fade-up">
+        <div class="career-content-box">
+            <h1>#{{module.taskId}}</h1>
+            <p><b>Name: </b> {{module.taskName}}</p>
+            <p><b>Description: </b> {{module.taskDescription}}</p>
+        </div>
+    </div>
+    </div>
+</div>

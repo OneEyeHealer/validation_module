@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BackEnd.Controllers
@@ -60,7 +61,7 @@ Module mod = context.Modules.FirstOrDefault(e => e.moduleId == id);
             }
             
         }
-        public HttpResponseMessage Put(int id)
+        public HttpResponseMessage Put([FromUri] int id)
         {
             try
             {
