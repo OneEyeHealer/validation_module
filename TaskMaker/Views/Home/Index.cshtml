@@ -1,41 +1,236 @@
-﻿
-
-<html>
+﻿<html>
 <head>
+    <link href="~/Content/app.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Scripts/angular.js"></script>
-    <script src="~/Scripts/jsFile/App.js"></script>
-    <link href="~/Content/css/card.css" rel="stylesheet" />
-    <link href="~/Content/css/app.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <script src="~/Scripts/app.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-drag-and-drop-lists/2.1.0/angular-drag-and-drop-lists.min.js"></script>
 </head>
-<body ng-app="myApp">
-    <div class="container">
-        <h2 class="text-center">Task Maker List</h2>
-        <div class="card m-3 text-left" style="width: 18rem">
-            <div class="card-header pointer" ng-click="OnAddModule()">{{AddModule}}</div>
+  <body ng-app="myApp">
+      <div class="container">
+          <h2 class="text-center">Task Maker List</h2>
+          <div class="container" ng-controller="moduleController">
+              <div class="card m-3 text-left" style="width: 18rem">
+                  <div class="card-header pointer" ng-click="OnPostData('Module','post', 0)">
+                      {{CModule}}
+                  </div>
+              </div>
+              @*<"main-menu">*@
+              <div class="row">
+                  @*module*@
+                  <div class="col">
+                      <div class="main-menu">
+                          <ul ng-repeat="module in moduleData" id="module">
+                              @*status: false*@
+                              <li class="item-c" id="module-{{module.moduleId}}" ng-if="!module.moduleStatus">
+                                  <a href="#module-{{module.moduleId}}" class="profile-btn js--box">
+                                      <i class="fa fa-file-text"></i>{{module.moduleName}}
+                                  </a>
+                                  <div class="sub-menu x-menu center-position">
+                                      <a href="#module" ng-click="OnRestore('Module', module.moduleId)">
+                                          <i class="fa fa-refresh" style="color: blue; padding-right: 5px"> &nbsp; Restore data</i> 
+                                      </a>
+                                  </div>
+                              </li>
+                              @*status: true*@
+                              <li class="item-c" id="module-{{module.moduleId}}" ng-if="module.moduleStatus">
+                                  <a href="#module-{{module.moduleId}}" class="profile-btn js--box" ng-click="OnModuleClick(module)">
+                                      <i class="fa fa-file-text"></i>{{module.moduleName}}
+                                  </a>
+                                  <div class="sub-menu x-menu center-position">
+                                      <a href="#module" ng-click="OnClose()">
+                                          <i class="fa fa-times"></i>
+                                      </a>
+                                      <span class="sub-menu-btn">
+                                          <i class="fa fa-edit text-info" ng-click="OnPutData('Module','put', module)"></i>
+                                          <i class="fa fa-trash text-danger" ng-click="OnDeleteData('Module', module.modlueId)"></i>
+                                      </span>
+                                      <a href="#module-{{module.moduleId}}" class="sub-menu-text">
+                                          <i class="fa fa-circle"></i> {{module.moduleDescription}}
+                                      </a>
+                                      <span class="float-right"><button class="btn btn-sm btn-primary" ng-click="OnPostData('Exercise', 'post', module.moduleId)">{{CExercise}}</button></span>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+
+                  @*exercise*@
+                  <div class="col">
+                      <div class="main-menu">
+                          <ul ng-repeat="exercise in Exercises" id="exercise">
+                              @*status: false*@
+                              <li class="item-c" id="exercise-{{exercise.exerciseId}}" ng-if="!exercise.exerciseStatus">
+                                  <a href="#exercise-{{exercise.exerciseId}}" class="profile-btn js--box">
+                                      <i class="fa fa-file-text"></i>{{exercise.exerciseName}}
+                                  </a>
+                                  <div class="sub-menu x-menu center-position">
+                                      <a href="#exercise" ng-click="OnRestore('Exercise', exercise.exerciseId)">
+                                          <i class="fa fa-refresh" style="color: blue; padding-right: 5px"> &nbsp; Restore data</i> 
+                                      </a>
+                                  </div>
+                              </li>
+                              @*status: ture*@
+                              <li class="item-c" id="Exercise-{{exercise.exerciseId}}" ng-if="exercise.exerciseStatus">
+                                  <a href="#Exercise-{{exercise.exerciseId}}" class="profile-btn js--box" ng-click="OnExerciseClick(exercise)">
+                                      <i class="fa fa-file-text"></i>{{exercise.exerciseName}}
+                                  </a>
+                                  <div class="sub-menu x-menu center-position">
+                                      <a href="#exercise" ng-click="OnClose()">
+                                          <i class="fa fa-times"></i>
+                                      </a>
+                                      <span class="sub-menu-btn">
+                                          <i class="fa fa-edit text-info" ng-click="OnPutData('Exercise', 'put', exercise)"></i>
+                                          <i class="fa fa-trash text-danger" ng-click="OnDeleteData('Exercise', exercise.exerciseId)"></i>
+                                      </span>
+                                      <a href="#Exercise-{{exercise.exerciseId}}" class="sub-menu-text">
+                                          <i class="fa fa-circle"></i> {{exercise.exerciseDescription}}
+                                      </a>
+                                      <span class="float-right"><button class="btn btn-sm btn-primary" ng-click="OnPostData('Task', 'post', exercise.exerciseId)">{{CTask}}</button></span>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+
+                  @*task*@
+                  <div class="col">
+                      <div class="main-menu">
+                          <ul ng-repeat="task in Tasks" id="task">
+                              @*status: false*@
+                              <li class="item-c" id="task-{{task.taskId}}" ng-if="!task.taskStatus">
+                                  <a href="#task-{{task.taskId}}" class="profile-btn js--box">
+                                      <i class="fa fa-file-text"></i>{{task.taskName}}
+                                  </a>
+                                  <div class="sub-menu x-menu center-position">
+                                      <a href="#task" ng-click="OnRestore('Task', task.taskId)">
+                                          <i class="fa fa-refresh" style="color: blue; padding-right: 5px"> &nbsp; Restore data</i>
+                                      </a>
+                                  </div>
+                              </li>
+                              @*status: ture*@
+                              <li class="item-c" id="Task-{{task.taskId}}" ng-if="task.taskStatus">
+                                  <a href="#Task-{{task.taskId}}" class="profile-btn js--box">
+                                      <i class="fa fa-file-text"></i>{{task.taskName}}
+                                  </a>
+                                  <div class="sub-menu x-menu center-position">
+                                      <a href="#task" ng-click="OnClose()">
+                                          <i class="fa fa-times"></i>
+                                      </a>
+                                      <span class="sub-menu-btn">
+                                          <i class="fa fa-edit text-info" ng-click="OnPutData('Task', 'put', task)"></i>
+                                          <i class="fa fa-trash text-danger" ng-click="OnDeleteData('Task', task.taskId)"></i>
+                                      </span>
+                                      <a href="#Task-{{task.taskId}}" class="sub-menu-text">
+                                          <i class="fa fa-circle"></i> {{task.taskDescription}}
+                                      </a>
+                                      @*<span class="float-right"><button class="btn btn-sm btn-primary">+ create Task</button></span>*@
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+              @*</>*@
+              @*<div class="navigation">
+            <ul>
+                <li class="has-sub" ng-repeat="exercise in moduleData">
+                    <a href="#">Title: {{module.moduleName}}</a>
+                    <ul>
+                        <li class="has-sub" ng-repeat="exercise in module.Exercises">
+                            <a href="#">Title: {{exercise.exerciseName}}<sup class="badge bg-danger">{{module.Exercises.length}}</sup></a>
+                            <ul>
+                                <li class="has-sub" ng-repeat="task in exercise.Tasks">
+                                    <a href="#">Title: {{task.taskName}}<sup class="badge bg-danger">{{exercise.Tasks.length}}</sup></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>*@
+
+              <!--<span>
+                {{simple}}
+                <pre>{{temp.data}}</pre>
+                <script type="text/ng-template" id="module.html">
+                    <ul dnd-list="module">
+                        <li ng-repeat="item in module"
+                            dnd-draggable="item"
+                            dnd-effect-allowed="move"
+                            dnd-moved="module.splice($index, 1)"
+                            dnd-selected="models.selected = item"
+                            ng-class="{selected: models.selected === item}"
+                            ng-include="item.type + '.html'">
+                        </li>
+                    </ul>
+                </script>
+                <script type="text/ng-template" id="list.html">
+                    <ul dnd-list="list">
+                        <li ng-repeat="item in list"
+                            dnd-draggable="item"
+                            dnd-effect-allowed="move"
+                            dnd-moved="list.splice($index, 1)"
+                            dnd-selected="models.selected = item"
+                            ng-class="{selected: models.selected === item}"
+                            ng-include="item.type + '.html'">
+                        </li>
+                    </ul>
+                </script>
+
+                <!-- This template is responsible for rendering a container element. It uses
+    the above list template to render each container column -->
+              <!--<script type="text/ng-template" id="container.html">
+        <div class="container-element box box-blue">
+            <h3>Container {{item.id}}</h3>
+            <div class="column" ng-repeat="list in item.columns" ng-include="'list.html'"></div>
+            <div class="clearfix"></div>
         </div>
-       
-        <div class="" ng-controller="moduleController">
-            <div class="col-4 card m-4" ng-repeat="module in data">
-                <div class="card-header text-center">
-                    <h3><span class="text-muted">#{{module.moduleId}}</span></h3>
-                </div>
-                <div class="card-body">
-                    <h1 class="card-title">Name: {{module.moduleName}}</h1>
-                    <p class="card-text">{{module.moduleDescription}}</p>
-                    <a href="#" class="btn btn-primary" ng-click="openExercise(module)">+ Create Exercise</a>
-                </div>
-                <div class="card-footer text-muted">
-                    {{currentTime}}
+    </script>-->
+              <!-- Template for a normal list item -->
+              <!--<script type="text/ng-template" id="item.html">
+        <div class="item">Item {{item.id}}</div>
+    </script>-->
+              <!-- Main area with dropzones and source code -->
+              <!--<div class="col-md-10">
+        <div class="row">
+            <div ng-repeat="(zone, list) in models.dropzones" class="col-md-6">
+                <div class="dropzone box box-yellow">-->
+              <!-- The dropzone also uses the list template -->
+              <!--<h3>Dropzone {{zone}}</h3>
+                        <div ng-include="'list.html'"></div>
+                    </div>
                 </div>
             </div>
+
+            @*<div view-source="nested"></div>*@
         </div>
-        <div ng-include="'/Home/Exercise'"></div>
-        <div ng-include="'/Home/Task'"></div>
-    </div>
-</body>
+    </span>-->
+              <div id="id01" class="modal">
+                  <span ng-click="OnCancel()" class="close" title="Close Modal">&times;</span>
+                  <form name="myForm" class="modal-content" ng-submit="OnSubmitData()">
+                      <div class="container">
+                          <h1>Insert {{insert}}</h1>
+                          <input type="hidden" ng-model="form.id" placeholder="Enter Name" name="name" required>
+
+                          <label for="name"><b>Name</b></label>
+                          <input type="text" ng-model="form.name" placeholder="Enter Name" name="name" required><br />
+                          <span ng-if="myForm.name.$invalid && myForm.name.$touched" class="text-danger">**Name is required</span><br />
+                          <label for="description"><b>Description</b></label>
+                          <input type="text" ng-model="form.description" placeholder="Enter Description" name="description"><br />
+                          <div ng-if="insert=='Exercise'">
+                              <label for="Category"><b>Category</b></label>
+                              <input type="text" ng-model="form.category" placeholder="Category" name="Category"><br />
+                          </div>
+
+                          <div class="clearfix">
+                              <button type="button" ng-click="OnCancel()" class="cancelbtn">Cancel</button>
+                              <button type="submit" ng-disabled="myForm.$invalid || myForm.$pending" class="signup button" value="submit" id="submit" name="submit">submit</button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </body>
 </html>
-
-
