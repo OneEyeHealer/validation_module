@@ -1,4 +1,4 @@
-﻿var app = angular.module("myApp", ["dndLists"]);
+﻿var app = angular.module("myApp", ['dndLists']);
 
 app.run(($rootScope) => {
   $rootScope.isNumber = [0 - 9] + $;
@@ -10,7 +10,12 @@ app.run(($rootScope) => {
   // rearrange variable
   $rootScope.RModule = "Rearrange Module";
   $rootScope.RExercise = "Rearrange Exercise";
-  $rootScope.RTask = "Rearrange Task";
+    $rootScope.RTask = "Rearrange Task";
+
+    // column Title
+    $rootScope.TModule = "Modules";
+    $rootScope.TExercise = "Exercises";
+    $rootScope.TTask = "Tasks";
 
   $rootScope.RearrangeData = [];
   $rootScope.idRD = null;
@@ -20,6 +25,13 @@ app.run(($rootScope) => {
 });
 
 app.controller("moduleController", ($scope, $rootScope, $http) => {
+    // variables
+    $scope.search = '';
+    $scope.showModule = false;
+    $scope.showExercise = false;
+    $scope.showTask = false;
+
+
   //interface
   $scope.form = {
     id: 0,
@@ -31,29 +43,59 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
   $scope.arrangeData = {
     id: [],
     position: [],
-  };
+    };
+
+    //search
+    $scope.OnSearch = (value) => {
+        $scope.search = value;
+        $scope.getData();
+    }
+    $scope.filterData = () => {
+        return $scope.moduleData.filter((data) => ((data.moduleName).toLowerCase()).includes($scope.search.toLowerCase()));
+    }
+
 
   // GEt
-  $http.get("/api/Segment").then(
-    (response) => {
-      $scope.moduleData = response.data;
-      console.log($scope.moduleData);
-    },
-    (error) => {
-      alert(response);
+    $scope.getData = () => {
+      $http.get("/api/Segment").then(
+          (response) => {
+              $scope.moduleData = $scope.search == '' ? response.data : $scope.filterData();
+        },
+        (error) => {
+          alert(response);
+        }
+      );
     }
-  );
+    $scope.getData();
 
   // click options
-  $scope.OnModuleClick = (module) => {
-    $scope.Exercises = module.moduleId ? module.Exercises : null;
-    console.log(`Module #${module.moduleId} click`);
-    console.log(module.Exercises);
+    $scope.OnModuleClick = (key, module) => {
+    //debugger
+    module.show = module.show == undefined || module.show == false;
+
+     $scope.Mkey = key;
+     $scope.showModule = module.show;
+     $scope.Exercises = `module-${module.moduleId}` == key ? module.Exercises : null;
+     console.log(`Module #${key} click`);
   };
-  $scope.OnExerciseClick = (exercise) => {
-    $scope.Tasks = exercise.Tasks;
-    console.log(`Exercise #${exercise.exerciseId} click`);
-  };
+  $scope.OnExerciseClick = (key, exercise) => {
+    exercise.show = exercise.show == undefined || exercise.show == false;
+      $scope.showExercise = exercise.show;
+      $scope.Ekey = key;
+      $scope.Tasks = `exercise-${exercise.exerciseId}` == key ? exercise.Tasks : null;
+    //$scope.Tasks = exercise.Tasks;
+    console.log(`Exercise #${key} click`);
+    };
+
+    $scope.OnTaskClick = (key, task) => {
+        //debugger
+        task.show = task.show == undefined || task.show == false;
+        $scope.showTask = task.show;
+        $scope.Tkey = key;
+        //$scope.Tasks = task.Tasks;
+        console.log(`Task #${key} click`);
+    };
+
 
   // Model: post Record
   $scope.OnPostData = (data, type, id) => {
@@ -283,9 +325,105 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
         }
       );
     console.log("ArrangeData", $scope.arrangeData);
-  };
+    };
 });
 
+
+app.controller('DemoController', function ($scope) {
+    $scope.dropCallback = function (index, item, external, type) {
+        var model = $scope.models.dropzones;
+        for (var y in model.B) {
+            for (var zz in model.B[y].columns) {
+                var myColumns = [];
+                var foundThem = false;
+                if (Array.isArray(model.B[y].columns[zz])) {
+                    $scope.models.dropzones.B[y].columns.splice(zz, 1);
+                }
+            }
+        }
+
+        return item;
+    };
+
+    $scope.models = {
+        selected: null,
+        templates: [{
+            type: "item",
+            id: 2
+        }, {
+            type: "container",
+            id: 1,
+            columns: [
+                []
+            ]
+        }],
+        dropzones: {
+            "Data": [
+                {
+                    "id": "module-1",
+                    "type": "container",
+                    "columns": [
+                        { "id": "exercise-1",  "type": "item"},
+                        { "id": "exercise-2",  "type": "item"}
+
+                    ]
+                },{
+                    "id": "module-1",
+                    "type": "item",
+                },
+            ],
+            "B": [
+
+                {
+                    "type": "item",
+                    "id": 7
+                }, {
+                    "type": "item",
+                    "id": 8
+                }, {
+                    "type": "container",
+                    "id": 1,
+                    "columns": [
+
+
+                        {
+                            "type": "item",
+                            "id": 2
+                        }, {
+                            "type": "item",
+                            "id": 3
+                        }
+
+                    ]
+                }, {
+                    "type": "container",
+                    "id": 2,
+                    "columns": [
+
+                        {
+                            "type": "item",
+                            "id": 9
+                        }, {
+                            "type": "item",
+                            "id": 10
+                        }, {
+                            "type": "item",
+                            "id": 11
+                        }
+
+                    ]
+                }, {
+                    "type": "item",
+                    "id": 16
+                }
+            ]
+        }
+    };
+
+    $scope.$watch('models.dropzones', function (model) {
+        $scope.modelAsJson = angular.toJson(model, true);
+    }, true);
+});
 var modal = document.getElementById("id01");
 
 // When the user clicks anywhere outside of the modal, close it

@@ -3,26 +3,98 @@
 	--nav-text-color: #fff;
 	--segemnt-color: rgb(184, 74, 248);
 	--text-red: #ff0000;
+	--text-black: #000;
 	--module-color: #1c6ba8;
 }
 
 .pointer {
 	cursor: pointer;
 }
+.active-block{
+	background: rgb(184, 74, 248);
+	color: #fff;
+}
+/*.active-block .discription-box{
+	color: #fff;
+}*/
+	.Active {
+		display: block;
+		background: #eee;
+	}
+.tasks{
+	background: #f8f8f8;
+}
+a, a:hover{
+	color: inherit;
+}
+
+.inActive{
+	display: none;
+}
+
 
 ul{
 	margin: 0 ;
 }
 
-.main-menu {
+.list-group .title{
+	font-size: 22px;
+	font-weight: 600;
+	color: var(--module-color);
+}
+.option-btn,.create-btn {
+	float: right;
+}
+.option-btn >i{
+	padding: 0 10px;
+	font-size: 25px;
+}
+.create-btn .manupulate-btn{
+	margin: 0.5em;
+}
+
+.discription-box{
+	font-size: 15px;
+	margin-left: 2.5em;
+}
+.discription-box i {
+	font-size: 10px;
+	position: relative;
+	top: -2px;
+	color: var(--text-black);
+}
+
+
+.title-box{
+	font-size: 32px;
+	font-family:'Times New Roman', Times, serif;
+	text-align: center;
+}
+
+.form-box {
+	text-align: end;
+	margin: 16px 0;
+	font-weight: 700;
+}
+
+input[type="search"] {
+	width: 10em;
+	border: transparent;
+	margin-top: .8em;
+	padding: 2px 5px;
+	border-bottom: 2px solid purple !important;
+	outline: none;
+}
+
+/*.main-menu {
 	width: 100%;
 	display: block;
-/*	border-radius: 8px;*/
-/*	overflow: hidden;*/
-	margin: auto;
+	border-radius: 8px;
+	overflow: hidden;
+	margin: auto;*/
 /*	border: 2px solid grey;*/
 /*	padding: 1em;*/
-}
+/*}
 
 @media (max-width: 315px) {
 	.main-menu {
@@ -41,11 +113,9 @@ ul{
 	overflow: hidden;
 	border-radius: 10px;
 }
-.active {
-	background: rgb(0 129 215 / 0.82)
-}
+
 .profile-btn {
-	display: block;
+	display:block;
 	padding: 16px 20px;
 	background: var(--module-color);
 	color: #fff;
@@ -63,9 +133,9 @@ ul{
 	transform: rotate(45deg);
 }
 
-	.profile-btn i {
-		margin-right: 10px;
-	}
+.profile-btn i {
+	margin-right: 10px;
+}
 
 .sub-menu {
 	background: #eee;
@@ -73,8 +143,10 @@ ul{
 	transition: max-height 0.3s;
 	max-height: 0;
 }
-.sub-menu-display-none{
-	display: none;
+
+.item-c:target .sub-menu {
+	transition: 2s ease-in-out;
+	max-height: 100em !important;
 }
 
 .sub-menu a i {
@@ -87,7 +159,7 @@ ul{
 .sub-menu a.sub-menu-text {
 	color: black;
 	font-weight: 500;
-	margin-top: 25px;
+	margin-top: 35px;
 }
 
 .sub-menu a.sub-menu-text i {
@@ -109,9 +181,9 @@ ul{
 }
 
 .sub-menu a:first-child, 
-.sub-menu-btn {
+.sub-menu-btn {*/
 	/* color: #fff; */
-	display: block;
+	/*display: block;
 	float: right;
 	padding: 0 0.1em 0.5em 0;
 	position: relative;
@@ -125,9 +197,7 @@ ul{
 	padding: 0 5px;
 	font-weight: bolder;
 	cursor:pointer;
-}
-.inactive {
-	max-height: 0em;
+	font-size: 25px;
 }
 
 .sub-menu .exception-link i {
@@ -167,13 +237,9 @@ ul{
 	opacity: 1;
 }
 
-.item-c:target .sub-menu {
-	max-height: 100em;
-	transition: 2s ease-in-out;
-}
 .item-c a.profile-btn:hover {
 	color: rgb(164, 194, 219);
-}
+}*/
 
 /***************************** Dropzone Styling *****************************/
 
