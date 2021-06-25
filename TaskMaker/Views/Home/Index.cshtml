@@ -341,6 +341,7 @@
                                         <td>{{data[nameRD]}}</td>
                                         <td>
                                             <input type="text" name="position" ng-model="arrangeData.position[$index]" required><br />
+                                            @*<input type="text" name="position" ng-change="CheckPositions($event)" required><br />*@
                                             <span ng-if="rearrangeForm.position.$invalid && rearrangeForm.position.$touched" class="text-danger">**Position is required</span><br />
                                             <span ng-pattern="isNumber" class="text-danger">**Position must be number</span><br />
                                         </td>

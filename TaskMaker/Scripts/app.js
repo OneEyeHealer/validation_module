@@ -266,8 +266,8 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
         $scope.arrangeData
       )
       .then(
-        (response) => {
-          alert("Rearrange Data Successfuly !!");
+          (response) => {
+          $scope.Toastfy("Rearrange Data", "Rearrange Data Successfuly !!", "success");
           $scope.OnCancel();
         },
         (error) => {
@@ -275,7 +275,11 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
         }
       );
     console.log("ArrangeData", $scope.arrangeData);
-  };
+    };
+    $scope.newPosition = 0; 
+    $scope.CheckPosition = (event) => {
+        console.log(event);
+    }
   $scope.Toastfy = (title, message, type) => {
     $scope.toastTitle = title;
     $scope.toastMessage = message;
