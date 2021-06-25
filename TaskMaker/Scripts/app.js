@@ -55,7 +55,22 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
       data.moduleName.toLowerCase().includes($scope.search.toLowerCase())
     );
   };
+    $scope.check = (data,index) => {
+        var ele = parseInt(data.target.value)
+        console.log($scope.arrangeData.position)
+        for (var i = 0; i < $scope.arrangeData.position.length ; i++) {
 
+            if ($scope.arrangeData.position[i] == ele && i!=index) {
+                console.log("same");
+                delete $scope.arrangeData.position[index]
+                console.log($scope.arrangeData.position)
+                break;
+            }
+            else {
+                console.log("different");
+            }
+        }
+    }
   // GEt
   $scope.getData = () => {
     $http.get("/api/Segment").then(
