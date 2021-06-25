@@ -55,7 +55,22 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
       data.moduleName.toLowerCase().includes($scope.search.toLowerCase())
     );
   };
+    $scope.check = (data,index) => {
+        var ele = parseInt(data.target.value)
+        console.log($scope.arrangeData.position)
+        for (var i = 0; i < index; i++) {
 
+            if ($scope.arrangeData.position[i] == ele) {
+                console.log("same");
+                $scope.arrangeData.position.splice(index,1)
+                console.log($scope.arrangeData.position)
+                break;
+            }
+            else {
+                console.log("different");
+            }
+        }
+    }
   // GEt
   $scope.getData = () => {
     $http.get("/api/Segment").then(
@@ -260,28 +275,28 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
   };
 
   $scope.handleRearrangeData = () => {
-    $http
-      .put(
-        `/api/${$scope.type == "Module" ? "Segment" : $scope.type}`,
-        $scope.arrangeData
-      )
-      .then(
-        (response) => {
-          alert("Rearrange Data Successfuly !!");
-          $scope.OnCancel();
-        },
-        (error) => {
-          alert(response);
-        }
-      );
-    console.log("ArrangeData", $scope.arrangeData);
-  };
-  $scope.Toastfy = (title, message, type) => {
-    $scope.toastTitle = title;
-    $scope.toastMessage = message;
-    $scope.toastType = type;
-    $scope.OpenToast();
-    location.reload();
+  //  $http
+  //    .put(
+  //      `/api/${$scope.type == "Module" ? "Segment" : $scope.type}`,
+  //      $scope.arrangeData
+  //    )
+  //    .then(
+  //      (response) => {
+  //        alert("Rearrange Data Successfuly !!");
+  //        $scope.OnCancel();
+  //      },
+  //      (error) => {
+  //        alert(response);
+  //      }
+  //    );
+  //  console.log("ArrangeData", $scope.arrangeData);
+  //};
+  //$scope.Toastfy = (title, message, type) => {
+  //  $scope.toastTitle = title;
+  //  $scope.toastMessage = message;
+  //  $scope.toastType = type;
+  //  $scope.OpenToast();
+  //  location.reload();
   };
 
   $scope.OpenToast = () => {

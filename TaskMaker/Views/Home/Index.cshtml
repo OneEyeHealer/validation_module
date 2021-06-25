@@ -340,7 +340,8 @@
                                         <th scope="row"><input type="text" ng-init="arrangeData.id[$index] = data[idRD]" ng-value="data[idRD]" required readonly /></th>
                                         <td>{{data[nameRD]}}</td>
                                         <td>
-                                            <input type="text" name="position" ng-model="arrangeData.position[$index]" required><br />
+                                            @*<input type="text" name="position" " required><br />*@
+                                            <input type="text" name="data" ng-model="arrangeData.position[$index]" ng-keyup="check($event,$index)" />
                                             <span ng-if="rearrangeForm.position.$invalid && rearrangeForm.position.$touched" class="text-danger">**Position is required</span><br />
                                             <span ng-pattern="isNumber" class="text-danger">**Position must be number</span><br />
                                         </td>
