@@ -275,28 +275,28 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
   };
 
   $scope.handleRearrangeData = () => {
-  //  $http
-  //    .put(
-  //      `/api/${$scope.type == "Module" ? "Segment" : $scope.type}`,
-  //      $scope.arrangeData
-  //    )
-  //    .then(
-  //      (response) => {
-  //        alert("Rearrange Data Successfuly !!");
-  //        $scope.OnCancel();
-  //      },
-  //      (error) => {
-  //        alert(response);
-  //      }
-  //    );
-  //  console.log("ArrangeData", $scope.arrangeData);
-  //};
-  //$scope.Toastfy = (title, message, type) => {
-  //  $scope.toastTitle = title;
-  //  $scope.toastMessage = message;
-  //  $scope.toastType = type;
-  //  $scope.OpenToast();
-  //  location.reload();
+    $http
+      .put(
+        `/api/${$scope.type == "Module" ? "Segment" : $scope.type}`,
+        $scope.arrangeData
+      )
+      .then(
+        (response) => {
+          alert("Rearrange Data Successfuly !!");
+          $scope.OnCancel();
+        },
+        (error) => {
+          alert(response);
+        }
+      );
+    console.log("ArrangeData", $scope.arrangeData);
+  };
+  $scope.Toastfy = (title, message, type) => {
+    $scope.toastTitle = title;
+    $scope.toastMessage = message;
+    $scope.toastType = type;
+    $scope.OpenToast();
+    location.reload();
   };
 
   $scope.OpenToast = () => {
