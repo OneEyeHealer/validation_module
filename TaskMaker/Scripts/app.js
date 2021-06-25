@@ -58,11 +58,11 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     $scope.check = (data,index) => {
         var ele = parseInt(data.target.value)
         console.log($scope.arrangeData.position)
-        for (var i = 0; i < index; i++) {
+        for (var i = 0; i < $scope.arrangeData.position.length ; i++) {
 
-            if ($scope.arrangeData.position[i] == ele) {
+            if ($scope.arrangeData.position[i] == ele && i!=index) {
                 console.log("same");
-                $scope.arrangeData.position.splice(index,1)
+                delete $scope.arrangeData.position[index]
                 console.log($scope.arrangeData.position)
                 break;
             }

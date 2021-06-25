@@ -291,7 +291,7 @@
                                     <label for="name"><b>Name</b></label>
                                 </div>
                                 <div class="col my-auto">
-                                    <input type="text" class="insert-data" ng-model="form.name" placeholder="Enter Name" name="name" required><br />
+                                    <input type="text" class="insert-data" ng-model="form.name" placeholder="Enter Name" name="name" required pattern="[a-zA-z]+$"><br />
                                     <span ng-if="myForm.name.$invalid && myForm.name.$touched" class="text-danger">**Name is required</span><br />
                                 </div>
                             </div>
@@ -300,7 +300,8 @@
                                     <label for="description"><b>Description</b></label>
                                 </div>
                                 <div class="col my-auto">
-                                    <input type="text" class="insert-data" ng-model="form.description" placeholder="Enter Description" name="description"><br />
+                                    <input type="text" class="insert-data" ng-model="form.description" placeholder="Enter Description" name="descriptions" pattern="[a-zA-z0-9 ]+$" required><br />
+                                    <span ng-if="myForm.descriptions.$invalid && myForm.descriptions.$touched" class="text-danger">**description must be in character or number</span><br />
                                 </div>
                             </div>
                             <div class="row" ng-if="insert=='Exercise'">
@@ -308,7 +309,8 @@
                                     <label for="Category"><b>Category</b></label>
                                 </div>
                                 <div class="col my-auto">
-                                    <input type="text" class="insert-data" ng-model="form.category" placeholder="Category" name="Category"><br />
+                                    <input type="text" class="insert-data" ng-model="form.category" placeholder="Category" name="Category" required pattern="[a-zA-z0-9 ]+$"><br />
+                                    <span ng-if="myForm.Category.$invalid && myForm.Category.$touched" class="text-danger">**it can be characters</span><br />
                                 </div>
                             </div>
 
@@ -340,10 +342,11 @@
                                         <th scope="row"><input type="text" ng-init="arrangeData.id[$index] = data[idRD]" ng-value="data[idRD]" required readonly /></th>
                                         <td>{{data[nameRD]}}</td>
                                         <td>
-                                            @*<input type="text" name="position" " required><br />*@
-                                            <input type="text" name="data" ng-model="arrangeData.position[$index]" ng-keyup="check($event,$index)" />
-                                            <span ng-if="rearrangeForm.position.$invalid && rearrangeForm.position.$touched" class="text-danger">**Position is required</span><br />
-                                            <span ng-pattern="isNumber" class="text-danger">**Position must be number</span><br />
+
+                                            <input type="text" name="position_{{$index}}" ng-model="arrangeData.position[$index]" ng-keyup="check($event,$index)" required pattern="[0-9]+$"/><br />
+                                            
+                                            <span ng-if="(rearrangeForm['position_'+$index].$invalid && rearrangeForm['position_'+$index].$touched)" class="text-danger">**number required</span><br />
+                                            @*<span ng-pattern="isNumber" class="text-danger">**Position must be number</span><br />*@
                                         </td>
                                     </tr>
                                 </tbody>
