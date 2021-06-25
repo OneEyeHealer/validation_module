@@ -21,16 +21,17 @@ app.run(($rootScope) => {
   $rootScope.idRD = null;
   $rootScope.nameRD = null;
 
+
   $rootScope.currentTime = new Date().toLocaleTimeString();
 });
 
 app.controller("moduleController", ($scope, $rootScope, $http) => {
+
     // variables
     $scope.search = '';
     $scope.showModule = false;
     $scope.showExercise = false;
     $scope.showTask = false;
-
 
   //interface
   $scope.form = {
@@ -50,10 +51,10 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
         $scope.search = value;
         $scope.getData();
     }
+
     $scope.filterData = () => {
         return $scope.moduleData.filter((data) => ((data.moduleName).toLowerCase()).includes($scope.search.toLowerCase()));
     }
-
 
   // GEt
     $scope.getData = () => {
@@ -125,45 +126,24 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
 
   // Delete Record - hide it
   $scope.OnDeleteData = (data, id) => {
-    if (data == "Module") {
-      $http.delete("/api/Segment?id=" + id).then(
+    $http.delete(`/api/${data == "Module" ? "Segment" : data}?id=${id}`).then(
+    (d) => {
+        console.log(d.data);
+        $scope.Toastfy('Delete', d.data.Message, 'delete');
+        $http.get("/api/Segment").then(
         (d) => {
-          console.log(d.data);
-          window.alert(d.data.Message);
-          $http.get("/api/Segment").then(
-            (d) => {
-              $scope.data = d.data;
-              console.log(d.data);
-            },
-            (error) => {
-              alert(d);
-            }
-          );
+            $scope.data = d.data;
+            console.log(d.data);
         },
         (error) => {
-          alert(d);
+            alert(d);
         }
-      );
-    } else {
-      $http.delete("/api/" + data + "?id=" + id).then(
-        (d) => {
-          console.log(d.data);
-          window.alert(d.data.Message);
-          $http.get("/api/Segment").then(
-            (d) => {
-              $scope.data = d.data;
-              console.log(d.data);
-            },
-            (error) => {
-              alert(d);
-            }
-          );
-        },
-        (error) => {
-          alert(error);
-        }
-      );
+        );
+    },
+    (error) => {
+        alert(d);
     }
+    );
   };
 
   // model: OnSubmit Record
@@ -178,32 +158,12 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
       (data[category] = $scope.form.category),
       console.log(data);
     if ($scope.requestType == "post") {
-      if ($scope.insert == "Module") {
-        $http.post("/api/Segment", data).then(
-          (d) => {
-            console.log(d.data);
-            window.alert(d.data.Message);
-            $http.get("/api/Segment").then(
-              (d) => {
-                $scope.data = d.data;
-                console.log(d.data);
-              },
-              (error) => {
-                alert(d);
-              }
-            );
-          },
-          (error) => {
-            alert(d);
-          }
-        );
-      } else {
         $http
-          .post("/api/" + $scope.insert + "?id=" + $scope.form.id, data)
+            .post(`/api/${$scope.insert == 'Module' ? 'Segment' : $scope.insert }?id=${$scope.form.id}`, data)
           .then(
             (d) => {
               console.log(d.data);
-              window.alert(d.data.Message);
+              $scope.Toastfy('Post Request', d.data.Message, 'success');
               $http.get("/api/Segment").then(
                 (d) => {
                   $scope.data = d.data;
@@ -218,32 +178,12 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
               alert(error);
             }
           );
-      }
+
     } else {
-      if ($scope.insert == "Module") {
-        $http.put("/api/Segment?id=" + $scope.form.id, data).then(
+          $http.put(`/api/${ $scope.insert == "Module" ? 'Segment' : $scope.insert }?id=${$scope.form.id}`, data).then(
           (d) => {
-            console.log(d.data);
-            window.alert(d.data);
-            $http.get("/api/Segment").then(
-              (d) => {
-                $scope.data = d.data;
-                console.log(d.data);
-              },
-              (error) => {
-                alert(d);
-              }
-            );
-          },
-          (error) => {
-            alert(d);
-          }
-        );
-      } else {
-        $http.put("/api/" + $scope.insert + "?id=" + $scope.form.id, data).then(
-          (d) => {
-            console.log(d.data);
-            window.alert(d.data);
+                  console.log(d.data);
+                  $scope.Toastfy('Update Request', d.data, 'success');
             $http.get("/api/Segment").then(
               (d) => {
                 $scope.data = d.data;
@@ -258,7 +198,6 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
             alert(error);
           }
         );
-      }
     }
 
     $scope.form = {
@@ -291,8 +230,8 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
 
   $scope.OnRestore = (data, id) => {
     $http.get(`/api/${data == "Module" ? "Segment" : data}?id=${id}`).then(
-      (response) => {
-        alert("Data Restored !!");
+        (response) => {
+            $scope.Toastfy('Restore', "Data Restored !!" , 'success');
       },
       (error) => {
         alert(response);
@@ -326,8 +265,24 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
       );
     console.log("ArrangeData", $scope.arrangeData);
     };
-});
+    $scope.Toastfy = (title, message, type) => {
+        $scope.toastTitle = title;
+        $scope.toastMessage = message;
+        $scope.toastType = type;
+        $scope.OpenToast();
+        location.reload();
+    }
 
+    $scope.OpenToast = () => {
+        var option = {
+            animation: true,
+            delay: 2000
+        };
+        var toastEvent = document.getElementById("liveToast");
+        var toastInstance = new bootstrap.Toast(toastEvent, option);
+        toastInstance.show();
+    }
+});
 
 app.controller('DemoController', function ($scope) {
     $scope.dropCallback = function (index, item, external, type) {
@@ -424,11 +379,12 @@ app.controller('DemoController', function ($scope) {
         $scope.modelAsJson = angular.toJson(model, true);
     }, true);
 });
+
 var modal = document.getElementById("id01");
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = (event) => {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
+    if (event.target == modal) {
+        modal.style.display = "none"
+    } 
 };
