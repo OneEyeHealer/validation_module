@@ -3,29 +3,54 @@
 	--nav-text-color: #fff;
 	--segemnt-color: rgb(184, 74, 248);
 	--text-red: #ff0000;
+	--text-white: #fff;
 	--text-black: #000;
-	--module-color: #1c6ba8;
+	--module-active: #52ab98;
+	--module-title: #303c6c;
+	--icon-color: #2b6777;
+	--exercise-inactive: #c8d8e4;
+	--task-color: #f2f2f2;
+	--task-active: #5088b4;
+}
+
+body{
+	background-image: url(../Media/white-clouds.jpg);
+	background-attachment: fixed;
+	background-position: center;
+	background-size:cover;
 }
 
 .pointer {
 	cursor: pointer;
 }
-.active-block{
-	background: rgb(184, 74, 248);
-	color: #fff;
-}
-/*.active-block .discription-box{
-	color: #fff;
-}*/
-	.Active {
-		display: block;
-		background: #eee;
-	}
-.tasks{
-	background: #f8f8f8;
-}
-a, a:hover{
+
+a, a:hover {
 	color: inherit;
+}
+
+ul {
+	margin: 0;
+}
+
+h1 {
+	font-family: "Cinzel Decorative", cursive;
+	font-size: 3em;
+	font-weight: 600;
+	color: var(--module-title)
+}
+
+i {
+	color: var(--icon-color);
+}
+.navbar-box {
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.navbar-box span.nav-title{
+	font-weight: 600;
+	color: var(--icon-color);
+}
+.Active {
+	display: block;
 }
 
 .inActive{
@@ -33,14 +58,8 @@ a, a:hover{
 }
 
 
-ul{
-	margin: 0 ;
-}
-
-.list-group .title{
-	font-size: 22px;
-	font-weight: 600;
-	color: var(--module-color);
+.list-group li{
+	border-radius: 5px;
 }
 .option-btn,.create-btn {
 	float: right;
@@ -63,8 +82,41 @@ ul{
 	top: -2px;
 	color: var(--text-black);
 }
+/*module*/
+.active-module {
+	background: var(--module-active);
+	color: #fff;
+}
 
+.active-module .title{
+	color: var(--text-white) !important;
+}
+.list-group .title {
+	font-size: 22px;
+	font-weight: 600;
+	color: var(--module-title);
+}
+.exercise-box {
+/*	background: #eee;*/
+	font-weight: 400;
+}
+.active-exercise{
+	background-color: var(--exercise-inactive) !important;
+}
 
+.tasks {
+	background: var(--task-color);
+	color: var(--module-title)
+}
+.active-task {
+/*	background: #52ab98;*/
+	background: var(--task-active);
+	color: var(--text-white);
+}
+
+/*.active-task i{
+	color: yellow;
+}*/
 .title-box{
 	font-size: 32px;
 	font-family:'Times New Roman', Times, serif;
@@ -78,175 +130,16 @@ ul{
 }
 
 input[type="search"] {
-	width: 10em;
+	width: 20em;
 	border: transparent;
 	margin-top: .8em;
 	padding: 2px 5px;
 	border-bottom: 2px solid purple !important;
 	outline: none;
+	background: transparent;
 }
-
-/*.main-menu {
-	width: 100%;
-	display: block;
-	border-radius: 8px;
-	overflow: hidden;
-	margin: auto;*/
-/*	border: 2px solid grey;*/
-/*	padding: 1em;*/
-/*}
-
-@media (max-width: 315px) {
-	.main-menu {
-		width: 15em;
-	}
-}
-
-@media (max-width: 285px) {
-	.main-menu {
-		width: 12em;
-	}
-}
-
-.item-c {
-	border-top: 5px solid rgb(164, 194, 219);
-	overflow: hidden;
-	border-radius: 10px;
-}
-
-.profile-btn {
-	display:block;
-	padding: 16px 20px;
-	background: var(--module-color);
-	color: #fff;
-	position: relative;
-}
-
-.profile-btn:before {
-	content: "";
-	position: absolute;
-	width: 14px;
-	height: 14px;
-	background: var(--module-color);
-	left: 20px;
-	bottom: -7px;
-	transform: rotate(45deg);
-}
-
-.profile-btn i {
-	margin-right: 10px;
-}
-
-.sub-menu {
-	background: #eee;
-	overflow: hidden;
-	transition: max-height 0.3s;
-	max-height: 0;
-}
-
-.item-c:target .sub-menu {
-	transition: 2s ease-in-out;
-	max-height: 100em !important;
-}
-
-.sub-menu a i {
-	color: #000;
-	font-weight: bolder;
-	font-size: 15px !important;
-}
-
-
-.sub-menu a.sub-menu-text {
-	color: black;
-	font-weight: 500;
-	margin-top: 35px;
-}
-
-.sub-menu a.sub-menu-text i {
-	color: var(--module-color);
-	font-weight: 500;
-	font-size: 12px;
-	text-align: center;
-}
-
-.sub-menu-exception {
-	background: #fff;
-	overflow: hidden;
-	min-height: 5em;
-}
-
-.sub-menu-exception a i {
-	color: #000;
-	margin: 14px 14px;
-}
-
-.sub-menu a:first-child, 
-.sub-menu-btn {*/
-	/* color: #fff; */
-	/*display: block;
-	float: right;
-	padding: 0 0.1em 0.5em 0;
-	position: relative;
-	font-size: 14px;
-}
-.sub-menu-btn {
-	margin-top: 5px;
-	margin-right: 5px;
-}
-.sub-menu-btn i{
-	padding: 0 5px;
-	font-weight: bolder;
-	cursor:pointer;
-	font-size: 25px;
-}
-
-.sub-menu .exception-link i {
-	position: relative;
-	display: block;
-	padding: 0 0.8em 0.5em 0;
-}
-
-.sub-menu a:first-child:before {
-	content: "";
-	position: absolute;
-	background: none;
-}
-
-.sub-menu a {
-	color: #fff;
-	display: block;
-	padding: 16px 15px;
-	position: relative;
-	margin: 4px 0;
-	font-size: 14px;
-}
-
-.sub-menu a:before {
-	content: "";
-	position: absolute;
-	width: 6px;
-	height: 100%;
-	background: #c4e1f5;
-	left: 0;
-	top: 0;
-	transition: 0.3s ease;
-	opacity: 0;
-}
-
-.sub-menu a:hover:before {
-	opacity: 1;
-}
-
-.item-c a.profile-btn:hover {
-	color: rgb(164, 194, 219);
-}*/
-
 /***************************** Dropzone Styling *****************************/
 
-/**
- * The dnd-list should always have a min-height,
- * otherwise you can't drop to it once it's empty
- */
 .nestedDemo .dropzone ul[dnd-list] {
 	margin: 0px;
 	min-height: 42px;
@@ -260,28 +153,14 @@ input[type="search"] {
 	padding: 0px;
 }
 
-/**
- * Reduce opacity of elements during the drag operation. This allows the user
- * to see where he is dropping his element, even if the element is huge. The
- * .dndDragging class is automatically set during the drag operation.
- */
 .nestedDemo .dropzone .dndDragging {
 	opacity: 0.7;
 }
 
-/**
- * The dndDraggingSource class will be applied to the source element of a drag
- * operation. It makes sense to hide it to give the user the feeling that he's
- * actually moving it. Note that the source element has also .dndDragging class.
- */
 .nestedDemo .dropzone .dndDraggingSource {
 	display: none;
 }
 
-/**
- * An element with .dndPlaceholder class will be added as child of the dnd-list
- * while the user is dragging over it.
- */
 .nestedDemo .dropzone .dndPlaceholder {
 	background-color: #ddd;
 	display: block;

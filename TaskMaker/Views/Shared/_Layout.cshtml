@@ -10,25 +10,21 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-light bg-primary">
+    <nav class="navbar navbar-light bg-light navbar-box">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <span style="font-size: 22px; color: #fff">
+                <span class="nav-title">
                     <i class="fa fa-tasks"></i>&nbsp;TaskMaker
                 </span>
             </a>
         </div>
     </nav>
-                @*<div class="container py-2">
-                    <span style="color: #fff; font-size: 22px">
-                        <i class="fa fa-tasks"></i>&nbsp;TaskMaker
-                    </span>
-                </div>*@   
-
     <div class="container body-content">
         @RenderBody()
     </div>
-
+    <script>
+        AOS.init();
+    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
