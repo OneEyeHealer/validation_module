@@ -42,6 +42,45 @@ h1 {
 i {
 	color: var(--icon-color);
 }
+
+.taskmaker-box{
+	min-height: 78vh;
+}
+
+.search-container {
+	height: 46px;
+	text-align: center;
+	width: 22em;
+	margin: auto;
+	overflow: hidden;
+	box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+	border-radius: 5px;
+}
+	.search-container:active,
+	.search-container:focus-visible,
+	.search-container:hover {
+		background: #fff;
+		box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+
+	}
+.search-icon {
+	display: inline-block;
+	padding: 11px 0px 11px 7px;
+}
+input[type="search"] {
+	width: 320px;
+	position:relative;
+	top: 0px;
+	right: 4px;
+	border: transparent;
+	padding-left:5px;
+	height: 46px;
+	outline: none;
+	background: transparent;
+}
+.notify-box i{
+	font-size: 25px;
+}
 .navbar-box {
 	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
@@ -64,14 +103,20 @@ i {
 .option-btn,.create-btn {
 	float: right;
 }
-.option-btn >i{
-	padding: 0 10px;
-	font-size: 25px;
+.option-btn > i.fa-edit,
+.option-btn > i.fa-trash {
+	margin: 0 10px;
+	font-size: 20px;
+	cursor:pointer;
 }
+
 .create-btn .manupulate-btn{
 	margin: 0.5em;
 }
-
+.manupulate-btn i {
+	color: var(--text-white);
+	font-size: 10px;
+}
 .discription-box{
 	font-size: 15px;
 	margin-left: 2.5em;
@@ -129,14 +174,8 @@ i {
 	font-weight: 700;
 }
 
-input[type="search"] {
-	width: 20em;
-	border: transparent;
-	margin-top: .8em;
-	padding: 2px 5px;
-	border-bottom: 2px solid purple !important;
-	outline: none;
-	background: transparent;
+.footer-box{
+	background: var(--module-title);
 }
 /***************************** Dropzone Styling *****************************/
 

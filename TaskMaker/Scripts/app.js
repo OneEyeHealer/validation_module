@@ -19,7 +19,8 @@ app.run(($rootScope) => {
 
   $rootScope.RearrangeData = [];
   $rootScope.idRD = null;
-  $rootScope.nameRD = null;
+$rootScope.nameRD = null;
+$rootScope.loadingData = 3;
 
   $rootScope.currentTime = new Date().toLocaleTimeString();
 });
@@ -72,11 +73,14 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
         }
     }
   // GEt
+    $scope.isOnline = false;
   $scope.getData = () => {
     $http.get("/api/Segment").then(
-      (response) => {
+        (response) => {
+            $scope.isOnline = response.status == 200;
+            console.log(response);
         $scope.moduleData =
-          $scope.search == "" ? response.data : $scope.filterData();
+          $scope.search == "" ? ($scope.isOnline ? response.data : null) : $scope.filterData();
       },
       (error) => {
         alert(response);
@@ -89,7 +93,6 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
   $scope.OnModuleClick = (key, module) => {
     //debugger
     module.show = module.show == undefined || module.show == false;
-
     $scope.Mkey = key;
     $scope.showModule = module.show;
     $scope.Exercises =
@@ -144,16 +147,8 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
   // Delete Record - hide it
   $scope.OnDeleteData = (data, id) => {
     $http.delete(`/api/${data == "Module" ? "Segment" : data}?id=${id}`).then((d) => {
-        console.log(d.data);
-        $scope.Toastfy("Delete", d.data.Message, "delete");
-        $http.get("/api/Segment").then((d) => {
-            $scope.data = d.data;
-            console.log(d.data);
-          },
-          (error) => {
-            alert(error);
-          }
-        );
+        $scope.Toastfy("Delete", `#${id} of ${data} ${d.data.Message}.`, "delete");
+        $scope.getData();
       },
       (error) => {
         alert(error);
@@ -174,25 +169,12 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
       console.log(data);
     if ($scope.requestType == "post") {
       $http
-        .post(
-          `/api/${$scope.insert == "Module" ? "Segment" : $scope.insert}?id=${
-            $scope.form.id
-          }`,
-          data
-        )
+        .post(`/api/${$scope.insert == "Module" ? "Segment" : $scope.insert}?id=${$scope.form.id}`,data)
         .then(
-          (d) => {
-            console.log(d.data);
-            $scope.Toastfy("Post Request", d.data.Message, "success");
-            $http.get("/api/Segment").then(
-              (d) => {
-                $scope.data = d.data;
-                console.log(d.data);
-              },
-              (error) => {
-                alert(error);
-              }
-            );
+          (response) => {
+                $scope.Toastfy(`New ${$scope.insert} `, `${response.data.Message}.`, "success");
+                console.log(response);
+                $scope.getData();
           },
           (error) => {
             alert(error);
@@ -207,18 +189,10 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
           data
         )
         .then(
-          (d) => {
-            console.log(d.data);
-            $scope.Toastfy("Update Request", d.data, "success");
-            $http.get("/api/Segment").then(
-              (d) => {
-                $scope.data = d.data;
-                console.log(d.data);
-              },
-              (error) => {
-                alert(d);
-              }
-            );
+          (response) => {
+                $scope.Toastfy("Update Request", `${response.data}.`, "success");
+                console.log(response);
+                $scope.getData();
           },
           (error) => {
             alert(error);
@@ -257,7 +231,8 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
   $scope.OnRestore = (data, id) => {
     $http.get(`/api/${data == "Module" ? "Segment" : data}?id=${id}`).then(
       (response) => {
-        $scope.Toastfy("Restore", "Data Restored !!", "success");
+            $scope.Toastfy("Restore", `#${id} of ${data} ${response.data}.`, "success");
+            console.log(response);
       },
       (error) => {
         alert(response);
@@ -300,7 +275,8 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     $scope.toastMessage = message;
     $scope.toastType = type;
     $scope.OpenToast();
-    location.reload();
+    $scope.getData();
+    //location.reload();
   };
 
   $scope.OpenToast = () => {
@@ -311,7 +287,8 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     var toastEvent = document.getElementById("liveToast");
     var toastInstance = new bootstrap.Toast(toastEvent, option);
     toastInstance.show();
-  };
+    };
+
 });
 
 app.controller("DemoController", function ($scope) {
