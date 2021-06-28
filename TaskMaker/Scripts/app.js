@@ -1,10 +1,34 @@
 ﻿var app = angular.module("myApp", ["dndLists"]);
 
 app.run(($rootScope) => {
-  $rootScope.isNumber = [0 - 9] + $;
+    $rootScope.isNumber = [0 - 9] + $;
+    var mrestore = document.getElementById('MRestore');
+    var erestore = document.getElementById('ERestore');
+    var trestore = document.getElementById('TRestore');
+    mrestore.innerHTML = `<i class="fa fa-refresh"></i>`;
+    erestore.innerHTML = `<i class="fa fa-refresh"></i>`;
+    trestore.innerHTML = `<i class="fa fa-refresh"></i>`;
+    
+    var CM = document.getElementById('CModule');
+    var RM = document.getElementById('RModule');
+
+    var CE = document.getElementById('CExercise');
+    var RE = document.getElementById('RExercise');
+
+    var CT = document.getElementById('CTask');
+    var RT = document.getElementById('RTask');
+
+    CM.innerHTML = `<i class="fa fa-plus"></i>`;
+    RM.innerHTML = `<i class="fa fa-undo"></i>`;
+
+    CE.innerHTML = `<i class="fa fa-plus"></i>`;
+    RE.innerHTML = `<i class="fa fa-undo"></i>`;
+
+    CT.innerHTML = `<i class="fa fa-plus"></i>`;
+    RT.innerHTML = `<i class="fa fa-undo"></i>`;
   // create variable
-  $rootScope.CModule = "+ Create Module";
-  $rootScope.CExercise = "+ Create Exercise";
+    $rootScope.CModule = "+ Create Module";
+    //$rootScope.CExercise = ;
   $rootScope.CTask = "+ Create Task";
 
   // rearrange variable

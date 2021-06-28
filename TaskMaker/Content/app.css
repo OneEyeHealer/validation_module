@@ -39,10 +39,13 @@ h1 {
 	color: var(--module-title)
 }
 
-i {
+i, i.fa-plus {
 	color: var(--icon-color);
 }
-
+.big-icon{
+	font-size: 20px;
+	margin: 0 10px;
+}
 .taskmaker-box{
 	min-height: 78vh;
 }
@@ -104,7 +107,9 @@ input[type="search"] {
 	float: right;
 }
 .option-btn > i.fa-edit,
-.option-btn > i.fa-trash {
+.option-btn > i.fa-trash,
+.option-btn  i.fa-plus
+{
 	margin: 0 10px;
 	font-size: 20px;
 	cursor:pointer;
