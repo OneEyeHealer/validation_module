@@ -59,13 +59,13 @@ i, i.fa-plus {
 	box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
 	border-radius: 5px;
 }
-	.search-container:active,
-	.search-container:focus-visible,
-	.search-container:hover {
-		background: #fff;
-		box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+.search-container:active,
+.search-container:focus-visible,
+.search-container:hover {
+	background: #fff;
+	box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 
-	}
+}
 .search-icon {
 	display: inline-block;
 	padding: 11px 0px 11px 7px;
@@ -98,8 +98,52 @@ input[type="search"] {
 .inActive{
 	display: none;
 }
+.pagination{
+	display: inline-flex;
+	margin-right: 1em;
+}
+/*.pagination li:first-child,
+.pagination li:last-child {
+	display: none;
+}
+.pagination li:not(:first-child) a {
+	margin-left: -1px;
+}
 
+.pagination li.active a {
+	z-index: 3;
+	color: #fff;
+	background-color: #0d6efd;
+	border-color: #0d6efd;
+}
 
+.pagination li.disabled a {
+	color: #6c757d;
+	pointer-events: none;
+	background-color: #fff;
+	border-color: #dee2e6;
+}
+
+.pagination li:first-child a {
+	border-top-left-radius: 0.25rem;
+	border-bottom-left-radius: 0.25rem;
+}
+
+.pagination li:last-child a {
+	border-top-right-radius: 0.25rem;
+	border-bottom-right-radius: 0.25rem;
+}
+
+.pagination li a {
+	position: relative;
+	display: block;
+	color: #0d6efd;
+	padding: .1em .5em;
+	text-decoration: none;
+	background-color: #fff;
+	border: 1px solid #dee2e6;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}*/
 .list-group li{
 	border-radius: 5px;
 }
@@ -123,6 +167,7 @@ input[type="search"] {
 	font-size: 10px;
 }
 .discription-box{
+	text-align: justify;
 	font-size: 15px;
 	margin-left: 2.5em;
 }
@@ -222,12 +267,12 @@ input[type="search"] {
 	border-color: #d6e9c6;
 }
 
-	.nestedDemo .dropzone .selected .box > h3 {
-		background-color: #dff0d8;
-		background-image: linear-gradient(to bottom,#dff0d8 0,#d0e9c6 100%);
-		border-color: #d6e9c6;
-		color: #3c763d;
-	}
+.nestedDemo .dropzone .selected .box > h3 {
+	background-color: #dff0d8;
+	background-image: linear-gradient(to bottom,#dff0d8 0,#d0e9c6 100%);
+	border-color: #d6e9c6;
+	color: #3c763d;
+}
 
 /***************************** Element type specific styles *****************************/
 
@@ -239,10 +284,10 @@ input[type="search"] {
 	margin: 10px;
 }
 
-	.nestedDemo .dropzone .container-element .column {
-		float: left;
-		width: 50%;
-	}
+.nestedDemo .dropzone .container-element .column {
+	float: left;
+	width: 50%;
+}
 
 /***************************** Toolbox *****************************/
 

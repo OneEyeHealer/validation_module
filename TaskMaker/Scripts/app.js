@@ -98,20 +98,71 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     }
   // GEt
     $scope.isOnline = false;
+    $scope.sortType = "Asc";
   $scope.getData = () => {
     $http.get("/api/Segment").then(
         (response) => {
             $scope.isOnline = response.status == 200;
-            console.log(response);
-        $scope.moduleData =
-          $scope.search == "" ? ($scope.isOnline ? response.data : null) : $scope.filterData();
+            $scope.PaginateResponse = [], $scope.currentPage = 1, $scope.numPerPage = $scope.pageSize == null ? 5 : $scope.pageSize, $scope.maxSize = 5;
+            $scope.mdata = response.data;
+            $scope.pages = Math.ceil($scope.mdata.length / $scope.numPerPage);
+            $scope.pageArray = [];
+            for (let i = 0; i < $scope.pages; i++) {
+                $scope.pageArray.push(parseInt(i));
+            }
+            console.log($scope.pages);
+            console.log($scope.pageArray);
+            $scope.paginatePages = (items) => {
+                $scope.currentPage = items;
+            }
+            $scope.makeData = () => {
+                $scope.mdata = [];
+                for (i = 0; i < response.data.length; i++) {
+                    $scope.mdata.push(response.data[i]);
+                }
+                console.log($scope.mdata);
+            };
+            $scope.makeData();
+
+            $scope.$watch('currentPage + numPerPage', () => {
+                var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
+                $scope.moduleData = $scope.search == "" ? ($scope.isOnline ? $scope.mdata.slice(begin, end) : null) : $scope.filterData();
+            });
+            $scope.OnSortData = () => {
+                $scope.isSort = $scope.isSort == undefined || $scope.isSort == false;
+                
+                $scope.sortType = null;
+                $scope.sortType = $scope.isSort ? 'Asc' : "Desc";
+                if ($scope.sortType == 'Asc') {
+                    $scope.moduleData.sort((a, b) => {
+                        let fa = a.moduleName.toLowerCase(), fb = b.moduleName.toLowerCase();
+                        if (fa < fb) return -1; 
+                        if (fa > fb) return 1; 
+                        return 0;
+                    });
+                }
+                else {
+                    $scope.moduleData.sort((a, b) => {
+                        let fa = a.moduleName.toLowerCase(), fb = b.moduleName.toLowerCase();
+                        if (fa > fb) return -1; 
+                        if (fa < fb) return 1;
+                        return 0;
+                    });
+                }
+            }
       },
       (error) => {
         alert(response);
       }
     );
   };
-  $scope.getData();
+    $scope.getData();
+
+    $scope.OnPageSizeChange = (value) => {
+        $scope.pageSize = value;
+        console.log(value);
+        $scope.getData();
+    }
 
   // click options
   $scope.OnModuleClick = (key, module) => {
@@ -222,15 +273,15 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
             alert(error);
           }
         );
-    }
-
+      }
+    $scope.OnCancel();
     $scope.form = {
       id: 0,
       name: null,
       description: null,
       category: null,
     };
-    document.getElementById("id01").style.display = "none";
+      document.getElementById("id01").style.display = "none";
   };
 
   $scope.OnCancel = () => {
@@ -288,7 +339,11 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
           alert(response);
         }
       );
-    console.log("ArrangeData", $scope.arrangeData);
+      console.log("ArrangeData", $scope.arrangeData);
+      $scope.arrangeData = {
+          id: [],
+          position: [],
+      };
     };
     $scope.newPosition = 0; 
     $scope.CheckPosition = (event) => {
@@ -425,3 +480,4 @@ window.onclick = (event) => {
     modal.style.display = "none";
   }
 };
+
