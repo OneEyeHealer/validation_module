@@ -18,7 +18,7 @@ app.run(($rootScope) => {
     var CT = document.getElementById('CTask');
     var RT = document.getElementById('RTask');
 
-    CM.innerHTML = `<i class="fa fa-plus"></i>`;
+    CM.innerHTML = `<i class="fa fa-plus-circle"></i>`;
     RM.innerHTML = `<i class="fa fa-undo"></i>`;
 
     CE.innerHTML = `<i class="fa fa-plus"></i>`;
@@ -55,7 +55,8 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
   $scope.showModule = false;
   $scope.showExercise = false;
   $scope.showTask = false;
-
+    //Archive data
+    $scope.showArchive = false;
   //interface
   $scope.form = {
     id: 0,
@@ -163,7 +164,10 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
         console.log(value);
         $scope.getData();
     }
-
+//Archive function
+    $scope.onArchive = () => {
+        $scope.showArchive = true;
+    }
   // click options
   $scope.OnModuleClick = (key, module) => {
     //debugger
