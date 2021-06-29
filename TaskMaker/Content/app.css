@@ -181,6 +181,7 @@ input[type="search"] {
 .active-module {
 	background: var(--module-active);
 	color: #fff;
+	
 }
 
 .active-module .title{

@@ -54,7 +54,7 @@
                     </select>
                 </span>
                 <ul class="pagination">
-                    <li class="page-item" ng-model="currentPage" ng-class="currentPage < pages ? 'disabled': ''"><a class="page-link"  ng-click="paginatePages(currentPage-1)">Previous</a></li>
+                    <li class="page-item" ng-model="currentPage" ng-class="currentPage > 1 ? '': 'disabled'"><a class="page-link"  ng-click="paginatePages(currentPage-1)">Previous</a></li>
                     <li class="page-item" ng-repeat="page in pageArray" ng-class="(page+1) === currentPage ? 'active' : ''"><a class="page-link" ng-click="paginatePages(page+1)">{{page+1}}</a></li>
                     <li class="page-item" ng-model="currentPage" ng-class="currentPage+1 > pages ? 'disabled': ''"><a class="page-link"  ng-click="paginatePages(currentPage+1)">Next</a></li>
                 </ul>
