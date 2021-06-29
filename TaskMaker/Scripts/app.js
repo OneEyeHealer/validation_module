@@ -18,7 +18,7 @@ app.run(($rootScope) => {
     var CT = document.getElementById('CTask');
     var RT = document.getElementById('RTask');
 
-    CM.innerHTML = `<i class="fa fa-plus-circle"></i>`;
+    CM.innerHTML = `<i class="fa fa-plus"></i>`;
     RM.innerHTML = `<i class="fa fa-undo"></i>`;
 
     CE.innerHTML = `<i class="fa fa-plus"></i>`;
@@ -104,6 +104,7 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     $http.get("/api/Segment").then(
         (response) => {
             $scope.isOnline = response.status == 200;
+            $scope.moduleData = $scope.search == "" ? response.data : $scope.filterData();
             $scope.PaginateResponse = [], $scope.currentPage = 1, $scope.numPerPage = $scope.pageSize == null ? 5 : $scope.pageSize, $scope.maxSize = 5;
             $scope.mdata = response.data;
             $scope.pages = Math.ceil($scope.mdata.length / $scope.numPerPage);
@@ -164,14 +165,17 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
         console.log(value);
         $scope.getData();
     }
-//Archive function
-    $scope.onArchive = () => {
+    //Archive function
+    $scope.OnArchive = () => {
         $scope.showArchive = true;
+    }
+    $scope.OnBackArchive = () => {
+        $scope.showArchive = false;
     }
   // click options
   $scope.OnModuleClick = (key, module) => {
     //debugger
-    module.show = module.show == undefined || module.show == false;
+    module.show = module.show == 'undefined' || module.show == false;
     $scope.Mkey = key;
     $scope.showModule = module.show;
     $scope.Exercises =
@@ -226,8 +230,7 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
   // Delete Record - hide it
   $scope.OnDeleteData = (data, id) => {
     $http.delete(`/api/${data == "Module" ? "Segment" : data}?id=${id}`).then((d) => {
-        $scope.Toastfy("Delete", `#${id} of ${data} ${d.data.Message}.`, "delete");
-        $scope.getData();
+        $scope.Toastfy("Delete", `${data} ${d.data.Message}.`, "delete");
       },
       (error) => {
         alert(error);
@@ -253,7 +256,6 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
           (response) => {
                 $scope.Toastfy(`New ${$scope.insert} `, `${response.data.Message}.`, "success");
                 console.log(response);
-                $scope.getData();
           },
           (error) => {
             alert(error);
@@ -271,7 +273,6 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
           (response) => {
                 $scope.Toastfy("Update Request", `${response.data}.`, "success");
                 console.log(response);
-                $scope.getData();
           },
           (error) => {
             alert(error);
@@ -302,7 +303,6 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
   };
 
   $scope.openExercise = (data) => {
-    console.log(data);
     $scope.exercise = data.Exercises;
     $scope.exerciseData = data.Exercises;
   };
@@ -311,12 +311,12 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     $http.get(`/api/${data == "Module" ? "Segment" : data}?id=${id}`).then(
       (response) => {
             $scope.Toastfy("Restore", `#${id} of ${data} ${response.data}.`, "success");
-            console.log(response);
       },
       (error) => {
         alert(response);
       }
     );
+    $scope.getData();
   };
 
   $scope.OnMoveData = (name, data) => {
@@ -325,7 +325,6 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     $rootScope.idRD = `${name.toLowerCase()}Id`;
     $rootScope.nameRD = `${name.toLowerCase()}Name`;
     document.getElementById("id02").style.display = "block";
-    console.log(data);
   };
 
   $scope.handleRearrangeData = () => {
@@ -357,8 +356,8 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     $scope.toastTitle = title;
     $scope.toastMessage = message;
     $scope.toastType = type;
-    $scope.OpenToast();
-    $scope.getData();
+      $scope.OpenToast();
+      $scope.getData();
     //location.reload();
   };
 
