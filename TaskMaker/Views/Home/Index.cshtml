@@ -48,7 +48,6 @@
                 <span class="me-3">
                     ModulePerPage:
                     <select aria-label="Default select example" ng-model="pageSize" ng-change="OnPageSizeChange(pageSize)">
-                        <option value="2">2</option>
                         <option value="8">8</option>
                         <option value="15">15</option>
                         <option value="25">25</option>
@@ -71,9 +70,8 @@
                 <span class="big-icon" ng-click="OnMoveData('Module', moduleData)" title="Rrarrange Module of TaskMaker List" id="RModule"></span>
             </div>
             <ul class="list-group" ng-if="moduleData.length == 0">
-                <li class="list-group-item">
-                    @*<img src="https://user-images.githubusercontent.com/4838076/34308760-ec55df82-e735-11e7-843b-2e311fa7b7d0.gif" width="100%" height="auto"/>*@
-                    <img src="http://shyamtha.com.np/admin/assets/nodatafound.png" width="100%" height="100%" />
+                <li class="list-group-item text-center">
+                    <img src="https://i.pinimg.com/originals/aa/e0/f8/aae0f8f26e1c06ef17a8959c857c2f23.png" width="50%" height="50%" />
                 </li>
             </ul>
             <!--Module-->

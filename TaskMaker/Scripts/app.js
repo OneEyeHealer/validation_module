@@ -108,7 +108,50 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
         (response) => {
             $scope.isOnline = response.status == 200;
             $scope.moduleData = $scope.search == "" ? response.data : $scope.filterData();
-    $scope.paginationFunction();
+            $scope.PaginateResponse = [], $scope.currentPage = 1, $scope.numPerPage = $scope.pageSize == null ? 5 : $scope.pageSize, $scope.maxSize = 5;
+            $scope.mdata = response.data;
+            $scope.pages = Math.ceil($scope.mdata.length / $scope.numPerPage);
+            $scope.pageArray = [];
+            for (let i = 0; i < $scope.pages; i++) {
+                $scope.pageArray.push(parseInt(i));
+            }
+            $scope.paginatePages = (items) => {
+                $scope.currentPage = items;
+            }
+            $scope.makeData = () => {
+                $scope.mdata = [];
+                for (i = 0; i < response.data.length; i++) {
+                    $scope.mdata.push(response.data[i]);
+                }
+            };
+            $scope.makeData();
+
+            $scope.$watch('currentPage + numPerPage', () => {
+                var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
+                $scope.moduleData = $scope.search == "" ? ($scope.isOnline ? $scope.mdata.slice(begin, end) : null) : $scope.filterData();
+            });
+            $scope.OnSortData = () => {
+                $scope.isSort = $scope.isSort == undefined || $scope.isSort == false;
+
+                $scope.sortType = null;
+                $scope.sortType = $scope.isSort ? 'Asc' : "Desc";
+                if ($scope.sortType == 'Asc') {
+                    $scope.moduleData.sort((a, b) => {
+                        let fa = a.moduleName.toLowerCase(), fb = b.moduleName.toLowerCase();
+                        if (fa < fb) return -1;
+                        if (fa > fb) return 1;
+                        return 0;
+                    });
+                }
+                else {
+                    $scope.moduleData.sort((a, b) => {
+                        let fa = a.moduleName.toLowerCase(), fb = b.moduleName.toLowerCase();
+                        if (fa > fb) return -1;
+                        if (fa < fb) return 1;
+                        return 0;
+                    });
+                }
+            }
       },
       (error) => {
         alert(response);
@@ -116,56 +159,9 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     );
     };
     $scope.getData();
-    $scope.PaginateResponse = [], $scope.currentPage = 1, $scope.numPerPage = $scope.pageSize == null ? 5 : $scope.pageSize, $scope.maxSize = 5;
-    $scope.paginationFunction = () => {
-        $scope.mdata = $scope.moduleData;
-        $scope.pages = Math.ceil($scope.mdata.length / $scope.numPerPage);
-        $scope.pageArray = [];
-        for (let i = 0; i < $scope.pages; i++) {
-            $scope.pageArray.push(parseInt(i));
-        }
-        $scope.paginatePages = (items) => {
-            $scope.currentPage = items;
-        }
-        $scope.makeData = () => {
-            $scope.mdata = [];
-            for (i = 0; i < $scope.moduleData.length; i++) {
-                $scope.mdata.push($scope.moduleData[i]);
-            }
-        };
-        $scope.makeData();
-
-        $scope.$watch('currentPage + numPerPage', () => {
-            var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
-            $scope.moduleData = $scope.search == "" ? ($scope.isOnline ? $scope.mdata.slice(begin, end) : null) : $scope.filterData();
-        });
-    }
-    $scope.OnSortData = () => {
-                $scope.isSort = $scope.isSort == undefined || $scope.isSort == false;
-                
-                $scope.sortType = null;
-                $scope.sortType = $scope.isSort ? 'Asc' : "Desc";
-                if ($scope.sortType == 'Asc') {
-                    $scope.moduleData.sort((a, b) => {
-                        let fa = a.moduleName.toLowerCase(), fb = b.moduleName.toLowerCase();
-                        if (fa < fb) return -1; 
-                        if (fa > fb) return 1; 
-                        return 0;
-                    });
-                }
-                else {
-                    $scope.moduleData.sort((a, b) => {
-                        let fa = a.moduleName.toLowerCase(), fb = b.moduleName.toLowerCase();
-                        if (fa > fb) return -1; 
-                        if (fa < fb) return 1;
-                        return 0;
-                    });
-                }
-            }
 
     $scope.OnPageSizeChange = (value) => {
         $scope.pageSize = value;
-        console.log(value);
         $scope.getData();
     }
     //Archive function
