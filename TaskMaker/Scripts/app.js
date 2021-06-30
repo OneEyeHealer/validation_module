@@ -39,7 +39,10 @@ app.run(($rootScope) => {
   // column Title
   $rootScope.TModule = "Modules";
   $rootScope.TExercise = "Exercises";
-  $rootScope.TTask = "Tasks";
+    $rootScope.TTask = "Tasks";
+
+    $rootScope.rootExercise = [];
+    $rootScope.rootTask = [];
 
   $rootScope.RearrangeData = [];
   $rootScope.idRD = null;
@@ -105,32 +108,39 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
         (response) => {
             $scope.isOnline = response.status == 200;
             $scope.moduleData = $scope.search == "" ? response.data : $scope.filterData();
-            $scope.PaginateResponse = [], $scope.currentPage = 1, $scope.numPerPage = $scope.pageSize == null ? 5 : $scope.pageSize, $scope.maxSize = 5;
-            $scope.mdata = response.data;
-            $scope.pages = Math.ceil($scope.mdata.length / $scope.numPerPage);
-            $scope.pageArray = [];
-            for (let i = 0; i < $scope.pages; i++) {
-                $scope.pageArray.push(parseInt(i));
+    $scope.paginationFunction();
+      },
+      (error) => {
+        alert(response);
+      }
+    );
+    };
+    $scope.getData();
+    $scope.PaginateResponse = [], $scope.currentPage = 1, $scope.numPerPage = $scope.pageSize == null ? 5 : $scope.pageSize, $scope.maxSize = 5;
+    $scope.paginationFunction = () => {
+        $scope.mdata = $scope.moduleData;
+        $scope.pages = Math.ceil($scope.mdata.length / $scope.numPerPage);
+        $scope.pageArray = [];
+        for (let i = 0; i < $scope.pages; i++) {
+            $scope.pageArray.push(parseInt(i));
+        }
+        $scope.paginatePages = (items) => {
+            $scope.currentPage = items;
+        }
+        $scope.makeData = () => {
+            $scope.mdata = [];
+            for (i = 0; i < $scope.moduleData.length; i++) {
+                $scope.mdata.push($scope.moduleData[i]);
             }
-            console.log($scope.pages);
-            console.log($scope.pageArray);
-            $scope.paginatePages = (items) => {
-                $scope.currentPage = items;
-            }
-            $scope.makeData = () => {
-                $scope.mdata = [];
-                for (i = 0; i < response.data.length; i++) {
-                    $scope.mdata.push(response.data[i]);
-                }
-                console.log($scope.mdata);
-            };
-            $scope.makeData();
+        };
+        $scope.makeData();
 
-            $scope.$watch('currentPage + numPerPage', () => {
-                var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
-                $scope.moduleData = $scope.search == "" ? ($scope.isOnline ? $scope.mdata.slice(begin, end) : null) : $scope.filterData();
-            });
-            $scope.OnSortData = () => {
+        $scope.$watch('currentPage + numPerPage', () => {
+            var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
+            $scope.moduleData = $scope.search == "" ? ($scope.isOnline ? $scope.mdata.slice(begin, end) : null) : $scope.filterData();
+        });
+    }
+    $scope.OnSortData = () => {
                 $scope.isSort = $scope.isSort == undefined || $scope.isSort == false;
                 
                 $scope.sortType = null;
@@ -152,13 +162,6 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
                     });
                 }
             }
-      },
-      (error) => {
-        alert(response);
-      }
-    );
-  };
-    $scope.getData();
 
     $scope.OnPageSizeChange = (value) => {
         $scope.pageSize = value;
@@ -179,7 +182,7 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     $scope.Mkey = key;
     $scope.showModule = module.show;
     $scope.Exercises =
-      `module-${module.moduleId}` == key ? module.Exercises : null;
+          `module-${module.moduleId}` == key ? module.Exercises : null;
     console.log(`Module #${key} click`);
   };
   $scope.OnExerciseClick = (key, exercise) => {
@@ -229,8 +232,11 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
 
   // Delete Record - hide it
   $scope.OnDeleteData = (data, id) => {
-    $http.delete(`/api/${data == "Module" ? "Segment" : data}?id=${id}`).then((d) => {
-        $scope.Toastfy("Delete", `${data} ${d.data.Message}.`, "delete");
+    $http.delete(`/api/${data == "Module" ? "Segment" : data}?id=${id}`).then((response) => {
+        $scope.Toastfy("Delete", `${data} ${response.data.Message}.`, "delete");
+        //$scope.showModule = false;
+        //$scope.showExercise = false;
+        //$scope.showTask = false;
       },
       (error) => {
         alert(error);
@@ -311,6 +317,9 @@ app.controller("moduleController", ($scope, $rootScope, $http) => {
     $http.get(`/api/${data == "Module" ? "Segment" : data}?id=${id}`).then(
       (response) => {
             $scope.Toastfy("Restore", `#${id} of ${data} ${response.data}.`, "success");
+            //$scope.showModule = false;
+            //$scope.showExercise = false;
+            //$scope.showTask = false;
       },
       (error) => {
         alert(response);

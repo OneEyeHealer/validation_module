@@ -84,6 +84,10 @@ input[type="search"] {
 .notify-box i{
 	font-size: 25px;
 }
+.rotated {
+	transform: rotate(180deg);
+	font-size: 35px !important;
+}
 .navbar-box {
 	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }

@@ -17,8 +17,9 @@
 <body ng-app="myApp">
 
     <div class="container taskmaker-box">
-        <h1 class="text-center">Task Maker List</h1>
         <div class="container" ng-controller="moduleController">
+        <h1 class="text-center mb-5" ng-if="!showArchive">Task Maker List</h1>
+            <span class='btn' ng-if="showArchive" ng-click="OnBackArchive()" title="Back to Task Maker"><i class="fa fa-sign-in-alt rotated"></i></span>
             <button type="button" class="btn btn-primary" id="liveToastBtn" style="display: none;" ng-click="OpenToast()">Show live toast</button>
 
             <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
@@ -35,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="search-container">
+            <div class="search-container" ng-if="!showArchive">
                 <span class="search-icon pointer">
                     <i class="fa fa-search"></i>&nbsp;
                 </span>
@@ -80,13 +81,13 @@
 
                 <!--Module false status-->
                 @*<li ng-repeat="module in moduleData" class="list-group-item" id="module-{{module.moduleId}}" ng-class="showModule && Mkey == 'module-'+module.moduleId ? 'active-module': ''" ng-if="!module.moduleStatus">
-                <span class="pointer" ng-click="OnModuleClick('module-'+module.moduleId, module)">
-                    <span class="title"><i class="fa fa-folder"></i>&nbsp;{{module.moduleName}}</span>
-                    <span class="option-btn mt-1">
-                        <span ng-click="OnRestore('Module', module.moduleId)" title="Restore the Data to its original state" id="MRestore"></span>
-                    </span>
+            <span class="pointer" ng-click="OnModuleClick('module-'+module.moduleId, module)">
+                <span class="title"><i class="fa fa-folder"></i>&nbsp;{{module.moduleName}}</span>
+                <span class="option-btn mt-1">
+                    <span ng-click="OnRestore('Module', module.moduleId)" title="Restore the Data to its original state" id="MRestore"></span>
                 </span>
-                </li>*@
+            </span>
+            </li>*@
                 <!--Module true status-->
                 <li ng-repeat="module in moduleData" class="list-group-item" id="module-{{module.moduleId}}" ng-class="showModule && Mkey == 'module-'+module.moduleId ? 'active-module': ''" ng-if="module.moduleStatus">
                     <span class="pointer" ng-click="OnModuleClick('module-'+module.moduleId, module)">
@@ -113,7 +114,7 @@
                     <!--Exercise-->
                     <ul class="list-group list-group-numbered" ng-if="Mkey == 'module-'+module.moduleId">
                         <!--Exercise False status-->
-                        <li ng-repeat="exercise in Exercises" class="list-group-item" id="exercise-{{exercise.exerciseId}}" ng-class="showModule ? 'Active exercise-box': 'inActive'" ng-if="!exercise.exerciseStatus">
+                        <li ng-repeat="exercise in module.Exercises" class="list-group-item" id="exercise-{{exercise.exerciseId}}" ng-class="showModule ? 'Active exercise-box': 'inActive'" ng-if="!exercise.exerciseStatus">
                             <span class="pointer" ng-click="OnExerciseClick('exercise-'+exercise.exerciseId, exercise)">
                                 <i class="fa fa-book-open"></i>&nbsp;{{exercise.exerciseName}}
                                 <span class="option-btn mt-1">
@@ -122,7 +123,7 @@
                             </span>
                         </li>
                         <!--Exercise true status-->
-                        <li ng-repeat="exercise in Exercises" class="list-group-item" id="exercise-{{exercise.exerciseId}}" ng-class="showModule ? (showExercise && Ekey == 'exercise-'+exercise.exerciseId && exercise.Tasks.length > 0 ? 'Active active-exercise' : 'Active exercise-box '): 'inActive'" ng-if="exercise.exerciseStatus">
+                        <li ng-repeat="exercise in module.Exercises" class="list-group-item" id="exercise-{{exercise.exerciseId}}" ng-class="showModule ? (showExercise && Ekey == 'exercise-'+exercise.exerciseId && exercise.Tasks.length > 0 ? 'Active active-exercise' : 'Active exercise-box '): 'inActive'" ng-if="exercise.exerciseStatus">
                             <span class="pointer" ng-click="OnExerciseClick('exercise-'+exercise.exerciseId, exercise)">
                                 <i class="fa " ng-class="showExercise && Ekey == 'exercise-'+exercise.exerciseId && exercise.Tasks.length > 0 ? 'fa-book-reader':'fa-book-open'"></i>&nbsp;{{exercise.exerciseName}} <span class="badge bg-warning">{{exercise.exerciseCategory}}</span>
                                 <span class="option-btn">
@@ -145,7 +146,7 @@
                             <!--Task-->
                             <ul class="list-group list-group-numbered" ng-if="Ekey == 'exercise-'+exercise.exerciseId">
                                 <!--Task false status-->
-                                <li ng-repeat="task in Tasks" class="list-group-item" id="task-{{task.taskId}}" ng-class="showExercise ? 'Active tasks': 'inActive'" ng-if="!task.taskStatus">
+                                <li ng-repeat="task in exercise.Tasks" class="list-group-item" id="task-{{task.taskId}}" ng-class="showExercise ? 'Active tasks': 'inActive'" ng-if="!task.taskStatus">
                                     <span class="pointer" ng-click="OnTaskClick('task-'+task.taskId, task)">
                                         <i class="fa fa-clipboard"></i>&nbsp;{{task.taskName}}
                                         <span class="option-btn mt-1">
@@ -154,7 +155,7 @@
                                     </span>
                                 </li>
                                 <!--Task true status-->
-                                <li ng-repeat="task in Tasks" class="list-group-item" id="task-{{task.taskId}}" ng-class="showExercise ? ( showTask && Tkey == 'task-'+task.taskId ? 'Active active-task': 'Active tasks'): 'inActive'" ng-if="task.taskStatus">
+                                <li ng-repeat="task in exercise.Tasks" class="list-group-item" id="task-{{task.taskId}}" ng-class="showExercise ? ( showTask && Tkey == 'task-'+task.taskId ? 'Active active-task': 'Active tasks'): 'inActive'" ng-if="task.taskStatus">
                                     <span class="pointer" ng-click="OnTaskClick('task-'+task.taskId, task)">
                                         <i class="fa" ng-class="showTask && Tkey == 'task-'+task.taskId ? 'fa-clipboard-list':'fa-clipboard'"></i>&nbsp;{{task.taskName}}
                                         <span class="option-btn">
@@ -172,8 +173,7 @@
                 </li>
             </ul>
             <ul ng-if="showArchive">
-                <button class='btn btn-primary'ng-click="OnBackArchive()">Back</button>
-                <h1>Archive Module</h1>
+                <h1 class="text-center">Archive of TaskMaker</h1>
                 @*Module false status*@
                 <li ng-repeat="module in moduleData" class="list-group-item" id="module-{{module.moduleId}}" ng-class="showModule && Mkey == 'module-'+module.moduleId ? 'active-module': ''" ng-if="!module.moduleStatus">
                     <span class="pointer" ng-click="OnModuleClick('module-'+module.moduleId, module)">
